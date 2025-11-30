@@ -1,0 +1,49 @@
+/* ===============================
+   FOOTER
+================================== */
+
+.footer {
+    background: #7b7b7b;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer-left a {
+    color: #111;
+    text-decoration: none;
+    margin-right: 18px;
+    font-size: 15px;
+}
+
+.footer-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.footer-right img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 14px 16px;
+    }
+
+    .footer-left {
+        order: 1;
+    }
+
+    .footer-right {
+        order: 2;
+    }
+}
