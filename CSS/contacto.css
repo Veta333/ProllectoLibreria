@@ -1,0 +1,73 @@
+/* Contenedor principal del body */
+.contacto {
+    display: flex;
+    background-color: #e6e6e6;
+    min-height: 450px;
+}
+
+/* Columna izquierda: texto y mapa */
+.contacto-info {
+    width: 65%;
+    padding: 40px;
+    background: #efefef;
+}
+
+.contacto-info h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.contacto-info p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Mapa */
+.contacto-mapa {
+    width: 200px;
+    height: auto;
+    border: 1px solid #000;
+    margin-top: 20px;
+}
+
+/* Columna derecha azul */
+.contacto-img-lateral {
+    width: 35%;
+    background-color: #1f3fa7; /* el azul de la maqueta */
+}
+
+
+/* ===============================
+   RESPONSIVE REAL PARA TUS CLASES
+================================== */
+
+/* Tablet y pantallas medianas */
+@media (max-width: 900px) {
+    .contacto {
+        flex-direction: column;
+    }
+
+    .contacto-info {
+        width: 100%;
+    }
+
+    .contacto-img-lateral {
+        width: 100%;
+        height: 200px; /* lo que quieras */
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .contacto-info {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .contacto-mapa {
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto;
+        display: block;
+    }
+}
