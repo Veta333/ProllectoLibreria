@@ -1,0 +1,83 @@
+/* =============================== */
+/* CONTENEDOR PRINCIPAL */
+/* =============================== */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main.privacidad {
+    flex: 1;
+    display: flex;
+    background-color: #dcdcdc;
+    padding: 40px;
+    gap: 30px;
+    min-height: 0;
+}
+
+/* Bloques de texto */
+.privacidad-texto {
+    width: 40%;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+/* Imagen en medio */
+.privacidad-imagen {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.privacidad-imagen img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* =============================== */
+/* RESPONSIVE: tablet y pantallas medianas */
+/* =============================== */
+@media (max-width: 900px) {
+    main.privacidad {
+        flex-direction: column;
+        padding: 25px 18px;
+    }
+
+    .privacidad-texto,
+    .privacidad-imagen {
+        width: 100%;
+    }
+
+    .privacidad-imagen img {
+        height: 160px;
+        width: auto;
+        margin: 20px 0;
+    }
+}
+
+/* =============================== */
+/* RESPONSIVE: móviles */
+/* =============================== */
+@media (max-width: 480px) {
+    main.privacidad {
+        padding: 16px 12px;
+    }
+
+    .privacidad-texto {
+        font-size: 14px;
+        text-align: justify;
+    }
+
+    .privacidad-imagen img {
+        width: 95%;
+        height: auto;
+    }
+}
