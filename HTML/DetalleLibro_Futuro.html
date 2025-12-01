@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Libro Futuro – Centro de ocio Local & Librería Carral</title>
+
+  <link rel="stylesheet" href="../CSS/header.css">
+  <link rel="stylesheet" href="../CSS/DetalleLibro.css">
+  <link rel="stylesheet" href="../CSS/footer.css">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo">
+    <a href="Index.html">Centro de ocio Local & Librería Carral.</a>
+  </div>
+
+  <nav class="nav-icons">
+    <button><img src="img/carrito.png" alt="Carrito"></button>
+
+    <div class="hamburger-container">
+      <button class="hamburger-btn" id="menuButton">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="menu" id="menuDropdown">
+        <a href="Libros.html">Libros</a>
+        <a href="#">????</a>
+        <a href="#">Calendario</a>
+        <a href="#">Organizar</a>
+        <a href="LibrosFuturos.html">Libros Futuros</a>
+      </nav>
+    </div>
+
+    <button><img src="img/user.png" alt="Usuario"></button>
+  </nav>
+</header>
+
+<!-- 🔥 FORMATO IDÉNTICO AL ARCHIVO ORIGINAL -->
+<main class="detalle-libro">
+  <div class="libro-contenedor">
+
+    <div class="libro-imagen">
+      <img id="imagenURL" src="" alt="Portada del libro futuro">
+    </div>
+
+    <div class="libro-info">
+      <h1 id="titulo">Cargando...</h1>
+      <h3 id="autor">Autor</h3>
+
+      <p id="genero">Cargando descripción...</p>
+
+      <div class="libro-compra">
+        <span id="precio" class="precio">0€</span>
+
+        <button id="btnCarrito">
+          <i class="fa fa-shopping-cart"></i> Reservar libro
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script type="module" src="../JS/DetalleLibro_Futuro.js"></script>
+
+<footer class="footer">
+  <div class="footer-left">
+    <a href="Contacto.html">Cómo contactar</a>
+    <a href="Privacidad.html">Privacidad</a>
+  </div>
+
+  <div class="footer-right">
+    <a href="https://www.linkedin.com" target="_blank">
+      <img src="img/linkedin.png" alt="LinkedIn">
+    </a>
+    <a href="https://www.instagram.com" target="_blank">
+      <img src="img/instagram.png" alt="Instagram">
+    </a>
+    <a href="https://www.twitter.com" target="_blank">
+      <img src="img/twitter.png" alt="Twitter">
+    </a>
+    <a href="https://www.facebook.com" target="_blank">
+      <img src="img/facebook.png" alt="Facebook">
+    </a>
+  </div>
+</footer>
+
+<script>
+const btn = document.getElementById("menuButton");
+const menu = document.getElementById("menuDropdown");
+
+btn.addEventListener("click", () => {
+  menu.classList.toggle("show");
+  btn.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!btn.contains(e.target) && !menu.contains(e.target)) {
+    menu.classList.remove("show");
+    btn.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
