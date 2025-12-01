@@ -1,0 +1,87 @@
+.calendario-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.cal-ano, .cal-mes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+.cal-ano button, .cal-mes button {
+    margin: 0 15px;
+    padding: 5px 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.cal-grid {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.cal-dia-nombre {
+    background: #d3d3d3;
+    padding: 12px 0;
+    font-weight: bold;
+}
+
+.cal-dias {
+    grid-column: span 7;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.cal-dia {
+    border: 1px solid #b0b0b0;
+    height: 100px;
+    position: relative;
+    text-align: left;
+    padding: 5px;
+    background: #efefef;
+}
+
+.cal-dia-num {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.cal-actual {
+    background: #ffd27f;
+}
+
+.evento {
+    font-size: 0.8rem;
+    margin-top: 3px;
+    padding: 2px;
+    background: #fff089;
+    border-left: 3px solid #d4b800;
+}
+
+
+
+/* Elimina el margen automático que dejan algunos navegadores */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* SOLO elimina los márgenes del body */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Asegura que el calendario no quede separado */
+.calendario-container {
+    margin-top: 20px;
+}
