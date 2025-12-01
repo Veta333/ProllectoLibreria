@@ -1,13 +1,38 @@
+/* --- Ajustes globales para ocupar toda la pantalla --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #f5f5f5; /* Opcional */
+}
+
+/* ===================== AJUSTES HEADER ===================== */
+.header {
+    position: relative; /* necesario para que el menu absolute funcione correctamente */
+    z-index: 1000;      /* asegura que el menu esté por encima de otros elementos */
+}
+
+/* --- Contenedor principal --- */
 .catalogo {
     padding: 30px 40px;
     width: 100%;
+    flex: 1; /* Ocupa todo el alto disponible */
+    box-sizing: border-box;
 }
 
+/* --- Buscador --- */
 .buscador {
     display: flex;
     width: 60%;
     margin: 0 auto 40px auto;
     border: 1px solid #bfbfbf;
+    background: #fff;
 }
 
 .buscador input {
@@ -23,9 +48,10 @@
     border: none;
     background: transparent;
     font-size: 18px;
+    cursor: pointer;
 }
 
-/* Grid flexible */
+/* --- Grid de tarjetas --- */
 .grid-tarjetas {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -33,7 +59,7 @@
     width: 100%;
 }
 
-/* Ahora tarjeta es un <a> */
+/* --- Tarjetas --- */
 .tarjeta {
     display: block;
     text-decoration: none;
@@ -42,6 +68,7 @@
     text-align: center;
     color: inherit;
     transition: transform 0.2s, box-shadow 0.3s;
+    border-radius: 6px;
 }
 
 .tarjeta:hover {
@@ -49,17 +76,26 @@
     box-shadow: 0 4px 12px #0003;
 }
 
-/* Imagen */
+/* Imagen dentro de la tarjeta */
 .tarjeta .imagen {
     width: 100%;
-    padding-top: 100%;
+    padding-top: 100%; /* cuadrada */
     background: #00c400;
     background-size: cover;
     background-position: center;
     border: 2px solid #00c400;
+    border-radius: 4px;
 }
 
+/* Texto de la tarjeta */
 .titulo {
     margin-top: 10px;
     font-size: 18px;
+}
+
+.precio {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 17px;
+    color: #222;
 }
