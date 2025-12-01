@@ -6,17 +6,17 @@
     <title>Centro de ocio Local & Librería Carral</title>
 
     <!-- CSS específicos -->
-    <link rel="stylesheet" href="../CSS/header.css">
-    <link rel="stylesheet" href="../CSS/contacto.css">
-    <link rel="stylesheet" href="../CSS/footer.css">
+<link rel="stylesheet" href="../CSS/header.css">
+<link rel="stylesheet" href="../CSS/libros.css">
+<link rel="stylesheet" href="../CSS/footer.css">
 
 </head>
 
 <body>
 
-     <!-- HEADER -->
+    <!-- HEADER -->
     <header class="header">
-        <div class="logo"><a href="Index.html">Centro de ocio Local & Librería Carral.</a></div>
+         <div class="logo"><a href="Index.html">Centro de ocio Local & Librería Carral.</a></div>
 
         <nav class="nav-icons">
             <button><img src="img/carrito.png" alt="Carrito"></button>
@@ -41,36 +41,27 @@
     </header>
 
 
-    <!-- ===================================== -->
-    <!--               BODY CONTACTO           -->
-    <!-- ===================================== -->
 
-    <main class="contacto">
 
-        <section class="contacto-info">
-            <h2>Contacto</h2>
 
-            <p>
-                Existen múltiples formas de ponerse en contacto con nosotros, por ejemplo 
-                nuestro Email: <strong>EjemploLibreria@Gmail.com</strong>.
-            </p>
 
-            <p>
-                También se puede contactar al siguiente número de teléfono:<br>
-                <strong>333 333 333</strong>
-            </p>
+    <!-- CONTENIDO -->
+    <main class="catalogo">
+        <!-- Buscador -->
+        <div class="buscador">
+            <input id="buscadorInput" type="text" placeholder="Buscar...">
+            <button disabled>🔍</button>
+        </div>
 
-            <p>
-                Y por último se puede acudir a nosotros presencialmente en la dirección:<br>
-                <strong>Calle inventada número inventado, Carral.</strong>
-            </p>
-
-            <img src="mapa.png" alt="Mapa ubicación" class="contacto-mapa">
-        </section>
-
-        <section class="contacto-img-lateral"></section>
-
+        <!-- Contenedor de tarjetas -->
+        <section id="gridLibros" class="grid-tarjetas"></section>
     </main>
+
+    <!-- SCRIPT EXTERNO -->
+    <script type="module" src="../JS/Libros_Futuros.js"></script>
+
+
+
 
 
 

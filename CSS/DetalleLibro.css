@@ -1,28 +1,37 @@
-/* CONTENEDOR PRINCIPAL OCUPA TODA LA PANTALLA */
+/* CONTENEDOR PRINCIPAL = PANTALLA COMPLETA */
 .detalle-libro {
-    min-height: calc(100vh - 120px); /* Ajusta si tu header+footer miden más o menos */
-    width: 100%;
-    padding: 60px 10%;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
     background-color: #fff;
     display: flex;
-    align-items: center;      /* Centrado vertical */
-    justify-content: center;  /* Centrado horizontal */
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
 }
 
-/* CONTENEDOR DEL LIBRO */
+/* CONTENEDOR DEL LIBRO OCUPA TODO */
 .libro-contenedor {
     width: 100%;
-    max-width: 1100px;
+    height: 100%;
+    padding: 60px 8%;
+    box-sizing: border-box;
     display: flex;
-    gap: 60px;
+    gap: 80px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 /* IMAGEN */
+.libro-imagen {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
 .libro-imagen img {
-    width: 300px;
+    width: 320px;
     height: auto;
     object-fit: cover;
     border: 1px solid #ccc;
@@ -30,12 +39,14 @@
 
 /* INFO */
 .libro-info {
-    width: 100%;
-    max-width: 600px;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .libro-info h1 {
-    font-size: 32px;
+    font-size: 36px;
     margin-bottom: 10px;
 }
 
@@ -46,25 +57,26 @@
 }
 
 .libro-info p {
-    font-size: 17px;
-    line-height: 1.7;
-    margin-bottom: 35px;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 900px;
 }
 
 /* ZONA DE COMPRA */
 .libro-compra {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 30px;
 }
 
 .precio {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: bold;
 }
 
 #btnCarrito {
-    padding: 12px 24px;
+    padding: 14px 30px;
     background-color: #444;
     color: white;
     border: none;
@@ -76,17 +88,40 @@
 }
 
 /* RESPONSIVE */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .libro-contenedor {
         flex-direction: column;
-        text-align: center;
+        gap: 40px;
+        padding: 40px 5%;
     }
 
-    .libro-imagen img {
-        width: 220px;
+    .libro-info p {
+        max-width: none;
     }
+}
 
-    .libro-compra {
-        justify-content: center;
-    }
+
+/* Elimina cualquier margen inesperado del documento */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+/* Obliga header y footer a ocupar TODO el ancho */
+header, footer {
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+
+/* Obliga el contenido a ajustarse exactamente entre ellos */
+.detalle-libro {
+    width: 100vw;
+    min-height: calc(100vh - (var(--header-h, 0px) + var(--footer-h, 0px)));
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex;
 }

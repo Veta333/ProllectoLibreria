@@ -16,13 +16,13 @@ const db = getFirestore(app);
 let librosCache = [];
 
 // =====================================================
-// 🔥 Leer TODOS los libros de la colección
+// 🔥 Leer TODOS los libros de la colección Libros_Futuros
 // =====================================================
 async function cargarLibros() {
     try {
-        console.log("Cargando colección 'Libros'...");
+        console.log("Cargando colección 'Libros_Futuros'...");
 
-        const snap = await getDocs(collection(db, "Libros"));
+        const snap = await getDocs(collection(db, "Libros_Futuros"));
 
         console.log("Documentos encontrados:", snap.size);
 
@@ -56,8 +56,8 @@ function pintarLibros(lista) {
         const tarjeta = document.createElement("a");
         tarjeta.classList.add("tarjeta");
 
-        // ✅ AQUÍ VA EL ENLACE CORRECTO
-        tarjeta.href = `../HTML/DetalleLibro.html?id=${libro.id}`;
+        // 🔗 Enlace a detalle
+        tarjeta.href = `../HTML/DetalleLibro_Futuro.html?id=${libro.id}`;
 
         const imagen = libro.imagenURL && libro.imagenURL.trim() !== ""
             ? libro.imagenURL
