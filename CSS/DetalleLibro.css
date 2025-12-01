@@ -1,0 +1,92 @@
+/* CONTENEDOR PRINCIPAL OCUPA TODA LA PANTALLA */
+.detalle-libro {
+    min-height: calc(100vh - 120px); /* Ajusta si tu header+footer miden más o menos */
+    width: 100%;
+    padding: 60px 10%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;      /* Centrado vertical */
+    justify-content: center;  /* Centrado horizontal */
+    box-sizing: border-box;
+}
+
+/* CONTENEDOR DEL LIBRO */
+.libro-contenedor {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* IMAGEN */
+.libro-imagen img {
+    width: 300px;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+
+/* INFO */
+.libro-info {
+    width: 100%;
+    max-width: 600px;
+}
+
+.libro-info h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.libro-info h3 {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.libro-info p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+/* ZONA DE COMPRA */
+.libro-compra {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.precio {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#btnCarrito {
+    padding: 12px 24px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#btnCarrito:hover {
+    background-color: black;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .libro-contenedor {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .libro-imagen img {
+        width: 220px;
+    }
+
+    .libro-compra {
+        justify-content: center;
+    }
+}
