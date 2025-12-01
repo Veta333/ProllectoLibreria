@@ -85,3 +85,69 @@ body {
 .calendario-container {
     margin-top: 20px;
 }
+
+
+/* Fondo oscuro */
+.evento-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* Oculto por defecto */
+.oculto {
+    display: none;
+}
+
+/* Tarjeta del evento */
+.evento-card {
+    background: #d6d6d6;
+    width: 80%;
+    max-width: 900px;
+    padding: 25px;
+    border-radius: 10px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    gap: 20px;
+    font-size: 1.1rem;
+}
+
+/* Cerrar */
+.cerrar-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Imagen */
+.ev-imagen-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ev-imagen-container img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    background: #00ff00;
+    border-radius: 8px;
+}
+
+.ev-imagen-texto {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}

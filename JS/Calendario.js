@@ -18,11 +18,15 @@ let ano = fechaActual.getFullYear();
 let mes = fechaActual.getMonth();
 let eventosCache = [];
 
+// Nombres de meses
 const mesesNombres = [
     "Enero","Febrero","Marzo","Abril","Mayo","Junio",
     "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
 ];
 
+// =============================
+// 🔥 Cargar eventos desde Firebase
+// =============================
 async function cargarEventos() {
     const snap = await getDocs(collection(db, "eventos"));
 
@@ -34,7 +38,11 @@ async function cargarEventos() {
     pintarCalendario();
 }
 
+// =============================
+// 🎨 Pintar el calendario
+// =============================
 function pintarCalendario() {
+
     document.getElementById("anoTexto").textContent = ano;
     document.getElementById("mesTexto").textContent = mesesNombres[mes];
 
@@ -47,9 +55,12 @@ function pintarCalendario() {
 
     const diasMes = new Date(ano, mes + 1, 0).getDate();
 
-    for (let i = 1; i < empieza; i++)
+    // Espacios antes del primer día
+    for (let i = 1; i < empieza; i++) {
         diasContainer.appendChild(document.createElement("div"));
+    }
 
+    // Días del mes
     for (let dia = 1; dia <= diasMes; dia++) {
 
         const fecha = new Date(ano, mes, dia);
@@ -58,6 +69,7 @@ function pintarCalendario() {
         const celda = document.createElement("div");
         celda.classList.add("cal-dia");
 
+        // Día actual marcado
         const esHoy =
             dia === fechaActual.getDate() &&
             mes === fechaActual.getMonth() &&
@@ -65,31 +77,33 @@ function pintarCalendario() {
 
         if (esHoy) celda.classList.add("cal-actual");
 
+        // Número del día
         const numero = document.createElement("div");
         numero.classList.add("cal-dia-num");
         numero.textContent = dia;
         celda.appendChild(numero);
 
-        // 🔥 Corrección importante: comparar fecha con Timestamp de Firebase
+        // Buscar eventos de este día
         const eventosDia = eventosCache.filter(e => {
             if (!e.fecha) return false;
-
             const fechaEvento = e.fecha.toDate().toISOString().split("T")[0];
             return fechaEvento === iso;
         });
 
+        // Si hay eventos, los mostramos y añadimos clic
         if (eventosDia.length > 0) {
+
             celda.style.cursor = "pointer";
 
             eventosDia.forEach(e => {
                 const ev = document.createElement("div");
                 ev.classList.add("evento");
-                ev.textContent = e.titulo;
+                ev.textContent = e.titulo || e.descripcion || "Evento";
                 celda.appendChild(ev);
             });
 
             celda.addEventListener("click", () => {
-                window.location.href = `EventoDetalle.html?id=${eventosDia[0].id}`;
+                abrirEvento(eventosDia[0]);
             });
         }
 
@@ -97,17 +111,65 @@ function pintarCalendario() {
     }
 }
 
-// Navegación
+// =============================
+// 📌 Abrir el desplegable
+// =============================
+function abrirEvento(evento) {
+
+    document.getElementById("eventoOverlay").classList.remove("oculto");
+
+    // Formatear la fecha
+    const fecha = evento.fecha.toDate();
+    const opciones = { day: "numeric", month: "long", year: "numeric" };
+    const fechaFormateada = fecha.toLocaleDateString("es-ES", opciones);
+
+    // Rellenar datos
+    document.getElementById("evFecha").textContent = fechaFormateada;
+
+    document.getElementById("evTitulo").textContent =
+        evento.descripcion ||
+        evento.titulo ||
+        "Sin título";
+
+    document.getElementById("evUbicacion").textContent =
+        evento.ubicacion || "No indicada";
+
+    document.getElementById("evHora").textContent =
+        evento.hora || "No indicada";
+
+    document.getElementById("evEdades").textContent =
+        evento.edades || "Todas las edades";
+
+    document.getElementById("evImagen").src =
+        evento.imagenURL || "";
+}
+
+// =============================
+// ❌ Cerrar el desplegable
+// =============================
+document.getElementById("cerrarOverlay").addEventListener("click", () => {
+    document.getElementById("eventoOverlay").classList.add("oculto");
+});
+
+// =============================
+// ⏪ Navegación
+// =============================
 document.getElementById("prevMonth").onclick = () => {
-    mes--; if (mes < 0) { mes = 11; ano--; }
+    mes--;
+    if (mes < 0) { mes = 11; ano--; }
     pintarCalendario();
 };
+
 document.getElementById("nextMonth").onclick = () => {
-    mes++; if (mes > 11) { mes = 0; ano++; }
+    mes++;
+    if (mes > 11) { mes = 0; ano++; }
     pintarCalendario();
 };
+
 document.getElementById("prevYear").onclick = () => { ano--; pintarCalendario(); };
 document.getElementById("nextYear").onclick = () => { ano++; pintarCalendario(); };
 
-// Iniciar
+// =============================
+// 🚀 Iniciar
+// =============================
 cargarEventos();
