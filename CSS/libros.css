@@ -1,0 +1,65 @@
+.catalogo {
+    padding: 30px 40px;
+    width: 100%;
+}
+
+.buscador {
+    display: flex;
+    width: 60%;
+    margin: 0 auto 40px auto;
+    border: 1px solid #bfbfbf;
+}
+
+.buscador input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.buscador button {
+    width: 45px;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+}
+
+/* Grid flexible */
+.grid-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+    width: 100%;
+}
+
+/* Ahora tarjeta es un <a> */
+.tarjeta {
+    display: block;
+    text-decoration: none;
+    background: #c7c7c7;
+    padding: 20px;
+    text-align: center;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.tarjeta:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px #0003;
+}
+
+/* Imagen */
+.tarjeta .imagen {
+    width: 100%;
+    padding-top: 100%;
+    background: #00c400;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #00c400;
+}
+
+.titulo {
+    margin-top: 10px;
+    font-size: 18px;
+}
