@@ -13,9 +13,12 @@ body {
 }
 
 /* ===================== AJUSTES HEADER ===================== */
-.header {
-    position: relative; /* necesario para que el menu absolute funcione correctamente */
-    z-index: 1000;      /* asegura que el menu esté por encima de otros elementos */
+/* No tocamos el header directamente para no romper proporciones */
+
+/* Ajuste solo en el contenedor del menú hamburguesa */
+.hamburger-container {
+    position: relative; /* contenedor de referencia para el menu absolute */
+    z-index: 100;       /* asegura que el menú esté por encima del contenido */
 }
 
 /* --- Contenedor principal --- */
