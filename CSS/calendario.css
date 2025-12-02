@@ -151,3 +151,79 @@ body {
     font-size: 0.9rem;
     opacity: 0.7;
 }
+
+
+/* Calendario responsive */
+@media (max-width: 768px) {
+  .cal-grid {
+    grid-template-columns: repeat(4, 1fr); /* Menos columnas para móvil */
+  }
+  #calDias {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  .cal-dia {
+    font-size: 0.9rem;
+    padding: 6px 4px;
+  }
+  .evento {
+    font-size: 0.7rem;
+  }
+  #nav {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  #nav button {
+    flex: 1 1 45%;
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 400px) {
+  .cal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #calDias {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+  .cal-dia {
+    font-size: 0.8rem;
+    padding: 4px 2px;
+  }
+  .evento {
+    font-size: 0.6rem;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .evento-card {
+    grid-template-columns: 1fr;  /* Columna única */
+    width: 95%;
+    max-width: none;
+    height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .ev-imagen-container img {
+    width: 100%;
+    height: auto;
+  }
+  .cerrar-overlay {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 400px) {
+  .evento-card {
+    height: 70vh;
+    padding: 15px;
+  }
+  .ev-titulo, .ev-fecha {
+    font-size: 1.1rem;
+  }
+  .ev-imagen-texto {
+    font-size: 0.8rem;
+  }
+}

@@ -23,7 +23,7 @@ const libroId = params.get("id");
 const img = document.getElementById("imagenURL");
 const titulo = document.getElementById("titulo");
 const autor = document.getElementById("autor");
-const descripcion = document.getElementById("genero");
+const genero = document.getElementById("genero");
 const precio = document.getElementById("precio");
 
 // =====================================================
@@ -50,7 +50,7 @@ async function cargarLibroFuturo() {
         img.src = libro.imagenURL || "img/no-image.png";
         titulo.textContent = libro.titulo || "Sin título";
         autor.textContent = libro.autor || "Autor desconocido";
-        descripcion.textContent = libro.descripcion || "Sin descripción disponible";
+        genero.textContent = libro.genero || "Sin descripción disponible";
         precio.textContent = libro.precio ? libro.precio + "€" : "Próximamente";
 
     } catch (error) {
