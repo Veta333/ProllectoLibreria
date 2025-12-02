@@ -2,10 +2,18 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebas
 import { 
   getFirestore, 
   doc, 
-  getDoc 
+  getDoc,
+  collection,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-// ✅ Tu configuración de Firebase
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+
+// CONFIGURACIÓN FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
   authDomain: "prollectolibreria.firebaseapp.com",
@@ -17,21 +25,28 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth();
 
-// ✅ Obtener ID desde la URL
+
+// OBTENER ID DEL LIBRO DESDE LA URL
 const params = new URLSearchParams(window.location.search);
 const libroId = params.get("id");
 
-console.log("ID recibido:", libroId);
 
-// ✅ Referencias al DOM (los que ya corregimos en tu HTML)
+// ELEMENTOS DEL DOM
 const titulo = document.getElementById("titulo");
 const autor = document.getElementById("autor");
 const descripcion = document.getElementById("genero");
 const precio = document.getElementById("precio");
 const imagen = document.getElementById("imagenURL");
+const btnCarrito = document.getElementById("btnCarrito");
 
-// ✅ Cargar libro desde Firestore
+let datosLibro = null;  // Guardamos aquí la info del libro para después
+
+
+// ===============================
+//  CARGAR DATOS DEL LIBRO
+// ===============================
 async function cargarLibro() {
   if (!libroId) {
     titulo.textContent = "Libro no encontrado";
@@ -43,19 +58,14 @@ async function cargarLibro() {
     const snapshot = await getDoc(libroRef);
 
     if (snapshot.exists()) {
-      const data = snapshot.data();
+      datosLibro = snapshot.data();
 
-      titulo.textContent = data.titulo;
-      autor.textContent = data.autor;
-      descripcion.textContent = data.genero;
-      precio.textContent = data.precio + "€";
+      titulo.textContent = datosLibro.titulo;
+      autor.textContent = datosLibro.autor;
+      descripcion.textContent = datosLibro.genero;
+      precio.textContent = datosLibro.precio + "€";
 
-      // Si no hay imagen, evita que se rompa
-      if (data.imagenURL && data.imagenURL !== "") {
-        imagen.src = data.imagenURL;
-      } else {
-        imagen.src = "img/default.jpg"; // imagen por defecto
-      }
+      imagen.src = datosLibro.imagenURL || "img/default.jpg";
 
     } else {
       titulo.textContent = "Libro no encontrado";
@@ -67,3 +77,41 @@ async function cargarLibro() {
 }
 
 cargarLibro();
+
+
+// ==========================================
+// AÑADIR AL CARRITO
+// ==========================================
+btnCarrito.addEventListener("click", async () => {
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("Debes iniciar sesión para añadir al carrito.");
+    return;
+  }
+
+  if (!datosLibro) {
+    alert("Error: libro no cargado.");
+    return;
+  }
+
+  try {
+    const ref = doc(collection(db, "users", user.uid, "cart"));
+
+    await setDoc(ref, {
+      titulo: datosLibro.titulo,
+      genero: datosLibro.genero,
+      precio: datosLibro.precio,
+      imagenURL: datosLibro.imagenURL || "",
+    });
+
+    alert("¡Libro añadido al carrito!");
+
+  } catch (err) {
+    console.error("Error al añadir al carrito:", err);
+  }
+});
+
+
+// Mantener sesión
+onAuthStateChanged(auth, () => {});
