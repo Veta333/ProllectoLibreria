@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
+// Configuración Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
     authDomain: "prollectolibreria.firebaseapp.com",
@@ -28,14 +29,13 @@ const mesesNombres = [
 // 🔥 Cargar eventos desde Firebase
 // =============================
 async function cargarEventos() {
-    const snap = await getDocs(collection(db, "eventos"));
-
-    eventosCache = snap.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }));
-
-    pintarCalendario();
+    try {
+        const snap = await getDocs(collection(db, "eventos"));
+        eventosCache = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        pintarCalendario();
+    } catch (error) {
+        console.error("Error al cargar eventos:", error);
+    }
 }
 
 // =============================
@@ -51,7 +51,7 @@ function pintarCalendario() {
 
     const primerDia = new Date(ano, mes, 1);
     let empieza = primerDia.getDay();
-    if (empieza === 0) empieza = 7;
+    if (empieza === 0) empieza = 7; // Ajuste para lunes como primer día
 
     const diasMes = new Date(ano, mes + 1, 0).getDate();
 
@@ -70,12 +70,11 @@ function pintarCalendario() {
         celda.classList.add("cal-dia");
 
         // Día actual marcado
-        const esHoy =
-            dia === fechaActual.getDate() &&
+        if (dia === fechaActual.getDate() &&
             mes === fechaActual.getMonth() &&
-            ano === fechaActual.getFullYear();
-
-        if (esHoy) celda.classList.add("cal-actual");
+            ano === fechaActual.getFullYear()) {
+            celda.classList.add("cal-actual");
+        }
 
         // Número del día
         const numero = document.createElement("div");
@@ -86,13 +85,19 @@ function pintarCalendario() {
         // Buscar eventos de este día
         const eventosDia = eventosCache.filter(e => {
             if (!e.fecha) return false;
-            const fechaEvento = e.fecha.toDate().toISOString().split("T")[0];
+
+            let fechaEvento;
+            if (typeof e.fecha.toDate === "function") {
+                fechaEvento = e.fecha.toDate().toISOString().split("T")[0];
+            } else {
+                fechaEvento = new Date(e.fecha).toISOString().split("T")[0];
+            }
+
             return fechaEvento === iso;
         });
 
         // Si hay eventos, los mostramos y añadimos clic
         if (eventosDia.length > 0) {
-
             celda.style.cursor = "pointer";
 
             eventosDia.forEach(e => {
@@ -115,31 +120,28 @@ function pintarCalendario() {
 // 📌 Abrir el desplegable
 // =============================
 function abrirEvento(evento) {
-
     document.getElementById("eventoOverlay").classList.remove("oculto");
 
-    // Formatear la fecha
-    const fecha = evento.fecha.toDate();
+    // Manejar fechas de Timestamp o string
+    let fecha;
+    if (evento.fecha && typeof evento.fecha.toDate === "function") {
+        fecha = evento.fecha.toDate();
+    } else {
+        fecha = new Date(evento.fecha);
+    }
+
     const opciones = { day: "numeric", month: "long", year: "numeric" };
     const fechaFormateada = fecha.toLocaleDateString("es-ES", opciones);
 
-    // Rellenar datos
     document.getElementById("evFecha").textContent = fechaFormateada;
-
     document.getElementById("evTitulo").textContent =
-        evento.descripcion ||
-        evento.titulo ||
-        "Sin título";
-
+        evento.descripcion || evento.titulo || "Sin título";
     document.getElementById("evUbicacion").textContent =
         evento.ubicacion || "No indicada";
-
     document.getElementById("evHora").textContent =
         evento.hora || "No indicada";
-
     document.getElementById("evEdades").textContent =
         evento.edades || "Todas las edades";
-
     document.getElementById("evImagen").src =
         evento.imagenURL || "";
 }

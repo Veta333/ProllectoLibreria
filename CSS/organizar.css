@@ -1,0 +1,103 @@
+/* =============================
+   RESET BÁSICO
+============================= */
+body {
+    margin: 0;       /* quitar margen del navegador */
+    padding: 0;
+    background: #e6e6e6;
+    font-family: Arial, sans-serif;
+}
+
+/* =============================
+   ZONA CENTRAL (entre header y footer)
+============================= */
+.event-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;   /* centrado vertical */
+    min-height: calc(100vh - 160px);
+    padding: 20px;
+}
+
+/* =============================
+   TARJETA DEL FORMULARIO
+============================= */
+.event-card {
+    background: #fff;
+    width: 420px;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    border-top: 4px solid #555;
+}
+
+.event-card h2 {
+    text-align: center;
+    margin-bottom: 28px;
+    color: #222;
+}
+
+/* =============================
+   CAMPOS
+============================= */
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    background: #f8f8f8;
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+input:focus,
+textarea:focus {
+    background: #fff;
+    border-color: #444;
+}
+
+textarea {
+    resize: none;
+    height: 90px;
+}
+
+/* =============================
+   BOTÓN
+============================= */
+.btn-confirmar {
+    width: 100%;
+    padding: 14px;
+    background: #303030;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.25s;
+}
+
+.btn-confirmar:hover {
+    background: black;
+}
+
+/* =============================
+   MENSAJE
+============================= */
+#msg {
+    margin-top: 18px;
+    text-align: center;
+    font-weight: bold;
+}
