@@ -1,0 +1,257 @@
+/* ------------------------ */
+/*   ESTILOS BASE PANTALLA  */
+/* ------------------------ */
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+}
+
+/* Para evitar espacios raros en móviles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* ------------------------ */
+/*     CONTENEDOR LISTA     */
+/* ------------------------ */
+
+.carrito-lista {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    flex: 1; /* Esto hace que crezca y llene la pantalla */
+}
+
+/* ------------------------ */
+/*    TARJETA DEL ARTÍCULO  */
+/* ------------------------ */
+
+.item-carrito {
+    background: #b5b5b5;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    position: relative;
+    min-height: 140px;
+    width: 100%;
+}
+
+/* Información del libro */
+.item-info {
+    font-size: 18px;
+    max-width: 60%;
+}
+
+.item-info p {
+    margin: 5px 0;
+}
+
+/* Imagen */
+.item-imagen {
+    width: 90px;
+    height: 90px;
+    border: 2px solid #fff;
+    background: #25d425;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-imagen img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Botón eliminar */
+.boton-eliminar {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.boton-eliminar img {
+    width: 28px;
+}
+
+/* -------------- */
+/*  TOTAL FINAL   */
+/* -------------- */
+
+.total-container {
+    width: 90%;
+    max-width: 300px;
+    margin: 30px auto;
+    background: #b5b5b5;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* ------------------------ */
+/*      RESPONSIVE          */
+/* ------------------------ */
+
+@media (max-width: 600px) {
+
+    .item-carrito {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 50px;
+    }
+
+    .item-info {
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .item-imagen {
+        width: 100px;
+        height: 100px;
+        align-self: center;
+    }
+
+    .boton-eliminar {
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+
+/* ========================= */
+/*       POPUP DE PAGO       */
+/* ========================= */
+
+.popup-overlay {
+    display: none; /* Oculto inicialmente */
+    position: fixed;   /* Fijo por encima de toda la página */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65); /* oscurece */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Lo hace estar encima de todo */
+}
+
+.popup-contenido {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 320px;
+    max-width: 90%;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
+}
+
+.fila {
+    display: flex;
+    gap: 10px;
+}
+
+.pagar-btn, .cerrar-btn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+.pagar-btn {
+    background: green;
+    color: white;
+}
+
+.cerrar-btn {
+    background: red;
+    color: white;
+}
+
+/* ========================= */
+/*       POPUP DE PAGO       */
+/* ========================= */
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Tarjeta del popup */
+.popup-contenido {
+    background: #e6e6e6; /* gris claro */
+    padding: 25px;
+    width: 360px;
+    max-width: 95%;
+    border-radius: 12px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Cada input del popup */
+.popup-contenido input {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 15px;
+    background: white;
+    box-sizing: border-box;
+}
+
+/* Fila de dos columnas */
+.fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Botones */
+.pagar-btn,
+.cerrar-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.pagar-btn {
+    background: #28a745;
+    color: white;
+}
+
+.cerrar-btn {
+    background: #dc3545;
+    color: white;
+}

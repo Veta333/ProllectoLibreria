@@ -7,7 +7,7 @@
 
     <!-- CSS específicos -->
     <link rel="stylesheet" href="../CSS/header.css">
-    <link rel="stylesheet" href="../CSS/login.css">
+    <link rel="stylesheet" href="../CSS/carrito.css">
     <link rel="stylesheet" href="../CSS/footer.css">
 </head>
 <body>
@@ -59,43 +59,16 @@
     <!-- JS DEL HEADER -->
     <script type="module" src="../JS/Header.js"></script>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <div class="contenido">
-        <h2 class="titulo">Inicio de Sesión</h2>
-        <p class="subtitulo">Selecciona el que más se acorde a tus necesidades</p>
+    <h1 class="titulo">Carrito de Compra</h1>
 
-        <div class="container">
+    <div id="carritoContainer" class="carrito-lista"></div>
 
-            <!-- COMPRADOR -->
-            <div class="card">
-                <h3>Comprador</h3>
-                <input type="email" id="compradorEmail" placeholder="Ingresa correo electrónico...">
-                <input type="password" id="compradorPass" placeholder="Ingresa contraseña...">
-                <button onclick="loginComprador()">Iniciar Sesión</button>
-            </div>
-
-            <!-- MENOR -->
-            <div class="card">
-                <h3>Menor Afiliado</h3>
-                <input type="email" id="menorEmail" placeholder="Ingresa correo electrónico...">
-                <input type="password" id="menorPass" placeholder="Ingresa contraseña...">
-                <button onclick="loginMenor()">Iniciar Sesión</button>
-            </div>
-
-            <!-- PADRE -->
-            <div class="card">
-                <h3>Padre Afiliado</h3>
-                <input type="email" id="padreEmail" placeholder="Ingresa correo electrónico...">
-                <input type="password" id="padrePass" placeholder="Ingresa contraseña...">
-                <button onclick="loginPadre()">Iniciar Sesión</button>
-            </div>
-        </div>
-
-        <div class="register-link">
-            No tienes cuenta?
-            <a href="registro.html">Prueba a Registrarte</a>
-        </div>
+    <div class="total-container">
+        <button id="btnTotal" class="total-boton">Total</button>
+        <h2>Total: <span id="totalPrecio">0</span> €</h2>
     </div>
+
+    <script type="module" src="../JS/Carrito.js"></script>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -120,35 +93,41 @@
         </div>
     </footer>
 
-
     <script>
-    const btn = document.getElementById("menuButton");
-    const menu = document.getElementById("menuDropdown");
+        const btn = document.getElementById("menuButton");
+        const menu = document.getElementById("menuDropdown");
 
-    btn.addEventListener("click", () => {
-        menu.classList.toggle("show");
-        btn.classList.toggle("active");
-    });
+        btn.addEventListener("click", () => {
+            menu.classList.toggle("show");
+            btn.classList.toggle("active");
+        });
 
-    document.addEventListener("click", (e) => {
-        if (!btn.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.remove("show");
-            btn.classList.remove("active");
-        }
-    });
-</script>
-    
-    <script type="module" src="../JS/login.js"></script>
+        // Cerrar el menú si se hace clic fuera
+        document.addEventListener("click", (e) => {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.remove("show");
+                btn.classList.remove("active");
+            }
+        });
+    </script>
+
+    <!-- POPUP PAGO (sin modificar nada de tu estructura) -->
+    <div id="popupPago" class="popup-overlay">
+        <div class="popup-contenido">
+            <h2>Pago con tarjeta</h2>
+
+            <input type="text" placeholder="Número de tarjeta" id="cardNumber">
+            <input type="text" placeholder="Nombre del titular" id="cardName">
+
+            <div class="fila">
+                <input type="text" placeholder="Fecha de vencimiento (MM/AA)" id="cardDate">
+                <input type="text" placeholder="Código de seguridad" id="cardCVC">
+            </div>
+
+            <button id="btnPagar" class="pagar-btn">Pagar</button>
+            <button id="cerrarPopup" class="cerrar-btn">Cerrar</button>
+        </div>
+    </div>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
