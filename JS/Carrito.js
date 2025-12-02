@@ -3,11 +3,12 @@ import {
     collection,
     getDocs,
     doc,
-    deleteDoc
+    deleteDoc,
+    getDoc,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
 const firebaseConfig = {
@@ -26,6 +27,9 @@ const auth = getAuth();
 const contenedor = document.getElementById("carritoContainer");
 const totalPrecio = document.getElementById("totalPrecio");
 
+// --------------------------
+// Cargar carrito del usuario
+// --------------------------
 async function cargarCarrito() {
     const user = auth.currentUser;
 
@@ -60,8 +64,8 @@ async function cargarCarrito() {
                 <img src="${libro.imagenURL}" alt="Libro">
             </div>
 
-            <div class="boton-eliminar" onclick="eliminarItem('${id}')">
-                <img src="../IMG/papelera.png" alt="Eliminar">
+            <div class="boton-eliminar" onclick="eliminarItem('${id}', '${libro.libroId}')">
+                <img src="../IMG/eliminar.png" alt="Eliminar">
             </div>
         `;
 
@@ -71,23 +75,44 @@ async function cargarCarrito() {
     totalPrecio.textContent = total.toFixed(2);
 }
 
-window.eliminarItem = async function(id) {
+// --------------------------
+// Función para eliminar item
+// --------------------------
+window.eliminarItem = async function(cartId, libroId) {
     const user = auth.currentUser;
     if (!user) return;
 
-    await deleteDoc(doc(db, "users", user.uid, "cart", id));
+    try {
+        // 1️⃣ Subir stock del libro
+        if (libroId) {
+            const libroRef = doc(db, "Libros", libroId);
+            const libroSnap = await getDoc(libroRef);
+            if (libroSnap.exists()) {
+                const stockActual = libroSnap.data().stock || 0;
+                await updateDoc(libroRef, { stock: stockActual + 1 });
+            }
+        }
 
-    cargarCarrito();
+        // 2️⃣ Eliminar del carrito
+        await deleteDoc(doc(db, "users", user.uid, "cart", cartId));
+
+        // 3️⃣ Recargar carrito
+        cargarCarrito();
+    } catch (error) {
+        console.error("Error eliminando del carrito:", error);
+    }
 };
 
+// --------------------------
+// Inicializar
+// --------------------------
 auth.onAuthStateChanged(() => {
     cargarCarrito();
 });
 
-
-// =====================
-// POPUP — ARREGLOS
-// =====================
+// --------------------------
+// POPUP DE PAGO
+// --------------------------
 const popup = document.getElementById("popupPago");
 const btnTotal = document.getElementById("btnTotal");
 const cerrarPopup = document.getElementById("cerrarPopup");

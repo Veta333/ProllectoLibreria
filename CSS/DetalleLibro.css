@@ -125,3 +125,27 @@ header, footer {
     padding: 0 !important;
     display: flex;
 }
+
+
+/* POPUP FLOTANTE “Añadido al carrito” */
+.mensaje-carrito {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #28a745; /* verde */
+    color: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(20px);
+    z-index: 10000;
+}
+
+.mensaje-carrito.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
