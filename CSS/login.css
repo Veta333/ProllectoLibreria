@@ -1,22 +1,37 @@
+/* SOLO BODY */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+    margin: 0;              /* elimina márgenes por defecto */
+    padding: 0;             /* elimina padding que genera espacios extra */
+    min-height: 100vh;      /* ocupa al menos toda la pantalla */
+    display: flex;
+    flex-direction: column;
     background: #f0f2f5;
 }
 
+/* Contenido principal (todo lo que está dentro del body, excluyendo header/footer) */
+body > .contenido {
+    flex: 1;                /* ocupa todo el espacio disponible entre header y footer */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centra verticalmente */
+    padding: 20px;          /* padding interno para no pegarse a los bordes */
+}
+
+/* Títulos centrados */
 .titulo {
     text-align: center;
     font-size: 26px;
-    margin-top: 10px;
+    margin: 0 0 10px 0;    /* elimina márgenes grandes */
 }
 
 .subtitulo {
     text-align: center;
     font-size: 18px;
-    margin-bottom: 25px;
+    margin: 0 0 25px 0;
 }
 
+/* Contenedor flexible y responsive */
 .container {
     display: flex;
     justify-content: center;
@@ -24,6 +39,7 @@ body {
     flex-wrap: wrap;
 }
 
+/* Tarjetas */
 .card {
     width: 300px;
     background: #c4c4c4;
@@ -44,7 +60,7 @@ body {
 
 .card button {
     padding: 12px;
-    background: #4CAF50;
+    background: black;
     color: white;
     border: none;
     border-radius: 6px;
@@ -55,6 +71,7 @@ body {
     background: #43a047;
 }
 
+/* Enlace de registro */
 .register-link {
     margin-top: 30px;
     text-align: center;
@@ -71,6 +88,7 @@ body {
     text-decoration: underline;
 }
 
+/* Responsive para móviles */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
