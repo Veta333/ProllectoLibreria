@@ -15,7 +15,7 @@ import {
 
 
 // ----------------------------------------
-// CONFIG FIREBASE  (REEMPLAZA ESTO POR TU CONFIG)
+// CONFIG FIREBASE (REEMPLAZAR POR LA TUYA)
 // ----------------------------------------
 const firebaseConfig = {
     apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
@@ -26,18 +26,25 @@ const firebaseConfig = {
     appId: "1:329126591666:web:c48091699a028cacfcddab"
 };
 
-// Inicializamos Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Código oculto para afiliados
+// Código secreto para afiliados
 const CODIGO_OCULTO = "PRUEBA";
 
 
-// ----------------------------------------------------
-// FUNCIÓN: REGISTRAR COMPRADOR
-// ----------------------------------------------------
+// ----------------------------------------
+// REDIRIGIR A HOME TRAS EL REGISTRO
+// ----------------------------------------
+function redirigirHome() {
+    window.location.href = "home.html";
+}
+
+
+// ----------------------------------------
+//    REGISTRAR COMPRADOR
+// ----------------------------------------
 async function registrarComprador() {
     const nombre = document.getElementById("c_nombre").value;
     const email  = document.getElementById("c_email").value;
@@ -54,21 +61,23 @@ async function registrarComprador() {
             postal
         });
 
-        alert("✔ Registrado como comprador");
+        alert("✔ Registrado correctamente");
+        redirigirHome();
+
     } catch (e) {
         alert("❌ Error: " + e.message);
     }
 }
 
 
-// ----------------------------------------------------
-// FUNCIÓN: REGISTRAR MENOR AFILIADO
-// ----------------------------------------------------
+// ----------------------------------------
+//    REGISTRAR MENOR
+// ----------------------------------------
 async function registrarMenor() {
     const codigo = document.getElementById("m_codigo").value;
 
     if (codigo !== CODIGO_OCULTO) {
-        alert("❌ Código de confirmación incorrecto");
+        alert("❌ Código incorrecto");
         return;
     }
 
@@ -87,21 +96,23 @@ async function registrarMenor() {
             edad
         });
 
-        alert("✔ Registrado como menor afiliado");
+        alert("✔ Registrado correctamente");
+        redirigirHome();
+
     } catch (e) {
         alert("❌ Error: " + e.message);
     }
 }
 
 
-// ----------------------------------------------------
-// FUNCIÓN: REGISTRAR PADRE AFILIADO
-// ----------------------------------------------------
+// ----------------------------------------
+//    REGISTRAR PADRE
+// ----------------------------------------
 async function registrarPadre() {
     const codigo = document.getElementById("p_codigo").value;
 
     if (codigo !== CODIGO_OCULTO) {
-        alert("❌ Código de confirmación incorrecto");
+        alert("❌ Código incorrecto");
         return;
     }
 
@@ -120,16 +131,18 @@ async function registrarPadre() {
             direccion
         });
 
-        alert("✔ Registrado como padre afiliado");
+        alert("✔ Registrado correctamente");
+        redirigirHome();
+
     } catch (e) {
         alert("❌ Error: " + e.message);
     }
 }
 
 
-// ----------------------------------------------------
-// HACER LAS FUNCIONES ACCESIBLES DESDE EL HTML
-// ----------------------------------------------------
+// ----------------------------------------
+// HACER FUNCIONES USABLES DESDE HTML
+// ----------------------------------------
 window.registrarComprador = registrarComprador;
-window.registrarMenor     = registrarMenor;
-window.registrarPadre     = registrarPadre;
+window.registrarMenor = registrarMenor;
+window.registrarPadre = registrarPadre;
