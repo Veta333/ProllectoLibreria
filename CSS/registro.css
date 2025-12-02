@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f4f4f4;
+    margin: 0;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+/* Tarjetas */
+.card {
+    background: #c7c7c7;
+    padding: 20px;
+    width: 300px;
+    max-width: 90%;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+    font-size: 14px;
+}
+
+button {
+    padding: 12px;
+    width: 100%;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #333;
+}
+
+/* ---------------------------
+   RESPONSIVE
+---------------------------- */
+
+/* Para tablets */
+@media (max-width: 900px) {
+    .container {
+        gap: 20px;
+    }
+}
+
+/* Para móviles */
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+}
