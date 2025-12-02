@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f0f2f5;
+}
+
+.titulo {
+    text-align: center;
+    font-size: 26px;
+    margin-top: 10px;
+}
+
+.subtitulo {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 300px;
+    background: #c4c4c4;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card input {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #1f1f1f;
+    color: white;
+}
+
+.card button {
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background: #43a047;
+}
+
+.register-link {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.register-link a {
+    color: #0066ff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
