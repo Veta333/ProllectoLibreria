@@ -198,3 +198,9 @@
 .user-menu.show {
     display: flex;
 }
+
+.icon-size {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+}
