@@ -1,6 +1,5 @@
-// ✅ Firebase v9
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
@@ -11,41 +10,59 @@ const firebaseConfig = {
   appId: "1:329126591666:web:c48091699a028cacfcddab"
 };
 
-// Init
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Elementos
+
 const userBtn = document.getElementById("userBtn");
 const userIcon = document.getElementById("userIcon");
+const userMenu = document.getElementById("userMenu");
+const logoutBtn = document.getElementById("logoutBtn");
 
-// ✅ Imagen local por defecto SIEMPRE
 const defaultUserImage = "../IMG/Perfil.png";
 
-// ✅ Estado de sesión
+
+userBtn.onclick = () => {
+    window.location.href = "../HTML/Login.html";
+};
+
+// Estado Firebase
 onAuthStateChanged(auth, (user) => {
 
-  if (user && user.photoURL) {
-    // ✅ Usuario con foto (Google)
-    userIcon.src = user.photoURL;
+    if (user) {
+        // Cambiar icono
+        userIcon.src = user.photoURL ?? defaultUserImage;
 
-    // NO redirige a ningún sitio
-    userBtn.onclick = null;
+        // Al hacer click: mostrar menú
+        userBtn.onclick = () => {
+            userMenu.classList.toggle("show");
+        };
 
-  } else if (user && !user.photoURL) {
-    //  Usuario SIN foto 
-    userIcon.src = defaultUserImage;
+        // Evento para cerrar sesión
+        logoutBtn.onclick = () => {
+            signOut(auth).then(() => {
+                window.location.href = "../HTML/Login.html";
+            });
+        };
 
-    userBtn.onclick = null;
+    } else {
+        // Usuario no logueado
+        userIcon.src = defaultUserImage;
+        userMenu.classList.remove("show");
 
-  } else {
-    //  NO logueado
-    userIcon.src = defaultUserImage;
+        userBtn.onclick = () => {
+            window.location.href = "../HTML/Login.html";
+        };
+    }
+});
 
-    //Clicka Login
-    userBtn.onclick = () => {
-      window.location.href = "../HTML/Login.html";
-    };
-  }
+document.addEventListener("click", (e) => {
 
+    // Si btn o menu no existen, no ejecutes el resto
+    if (!btn || !menu) return;
+
+    if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove("show");
+        btn.classList.remove("active");
+    }
 });

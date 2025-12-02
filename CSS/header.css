@@ -162,3 +162,39 @@
         height: 24px;
     }
 }
+
+
+.user-menu {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background: #000;
+    color: white;
+    border-radius: 6px;
+    padding: 10px 0;
+    width: 140px;
+    display: none;            /* oculto por defecto */
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    z-index: 999;
+}
+
+.user-menu button {
+    background: none;
+    border: 0;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.user-menu button:hover {
+    background: #333;
+}
+
+/* Mostrar menú */
+.user-menu.show {
+    display: flex;
+}

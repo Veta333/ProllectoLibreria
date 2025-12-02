@@ -6,39 +6,53 @@
     <title>Centro de ocio Local & Librería Carral</title>
 
     <!-- CSS específicos -->
-<link rel="stylesheet" href="../CSS/header.css">
-<link rel="stylesheet" href="../CSS/registro.css">
-<link rel="stylesheet" href="../CSS/footer.css">
-
+    <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/registro.css">
+    <link rel="stylesheet" href="../CSS/footer.css">
 </head>
-
 <body>
 
     <!-- HEADER -->
     <header class="header">
-         <div class="logo"><a href="Index.html">Centro de ocio Local & Librería Carral.</a></div>
+        <div class="logo">
+            <a href="Index.html">Centro de ocio Local & Librería Carral.</a>
+        </div>
 
         <nav class="nav-icons">
-            <button><img src="img/carrito.png" alt="Carrito"></button>
-            <div class="hamburger-container">
-    <button class="hamburger-btn" id="menuButton">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
+            <!-- CARRITO -->
+            <button class="icon-btn">
+                <img src="img/carrito.png" alt="Carrito">
+            </button>
 
-    <nav class="menu" id="menuDropdown">
-        <a href="Libros.html">Libros</a>
-        <a href="#">????</a>
-        <a href="Calendario.html">Calendario</a>
-        <a href="Organizar.html">Organizar</a>
-        <a href="Librosfuturos.html">Libros Futuros</a>
-    </nav>
-</div>
+            <!-- HAMBURGUESA -->
+            <div class="hamburger-container">
+                <button class="hamburger-btn" id="menuButton">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav class="menu" id="menuDropdown">
+                    <a href="Libros.html">Libros</a>
+                    <a href="#">????</a>
+                    <a href="Calendario.html">Calendario</a>
+                    <a href="Organizar.html">Organizar</a>
+                    <a href="Librosfuturos.html">Libros Futuros</a>
+                </nav>
+            </div>
+
+            <!-- USUARIO (CONTROLADO POR FIREBASE) -->
+<button id="userBtn">
+    <img id="userIcon" src="img/user.png" alt="Usuario">
 </button>
-            <button><img src="img/user.png" alt="Usuario"></button>
+
         </nav>
     </header>
+
+    <!-- JS DEL HEADER -->
+    <script type="module" src="../JS/Header.js"></script>
+
+
 <h2>Registro</h2>
 <p>Selecciona el tipo de cuenta</p>
 

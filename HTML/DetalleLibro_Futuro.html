@@ -1,46 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Libro Futuro – Centro de ocio Local & Librería Carral</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de ocio Local & Librería Carral</title>
 
-  <link rel="stylesheet" href="../CSS/header.css">
-  <link rel="stylesheet" href="../CSS/DetalleLibro.css">
-  <link rel="stylesheet" href="../CSS/footer.css">
+    <!-- CSS específicos -->
+    <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/DetalleLibro.css">
+    <link rel="stylesheet" href="../CSS/footer.css">
 </head>
-
 <body>
 
-<header class="header">
-  <div class="logo">
-    <a href="Index.html">Centro de ocio Local & Librería Carral.</a>
-  </div>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <a href="Index.html">Centro de ocio Local & Librería Carral.</a>
+        </div>
 
-  <nav class="nav-icons">
-    <button><img src="img/carrito.png" alt="Carrito"></button>
+        <nav class="nav-icons">
+            <!-- CARRITO -->
+            <button class="icon-btn">
+                <img src="img/carrito.png" alt="Carrito">
+            </button>
 
-    <div class="hamburger-container">
-      <button class="hamburger-btn" id="menuButton">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+            <!-- HAMBURGUESA -->
+            <div class="hamburger-container">
+                <button class="hamburger-btn" id="menuButton">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
 
-      <nav class="menu" id="menuDropdown">
-        <a href="Libros.html">Libros</a>
-        <a href="#">????</a>
-        <a href="Calendario.html">Calendario</a>
-        <a href="Organizar.html">Organizar</a>
-        <a href="LibrosFuturos.html">Libros Futuros</a>
-      </nav>
-    </div>
+                <nav class="menu" id="menuDropdown">
+                    <a href="Libros.html">Libros</a>
+                    <a href="#">????</a>
+                    <a href="Calendario.html">Calendario</a>
+                    <a href="Organizar.html">Organizar</a>
+                    <a href="Librosfuturos.html">Libros Futuros</a>
+                </nav>
+            </div>
 
-    <button><img src="img/user.png" alt="Usuario"></button>
-  </nav>
-</header>
+            <!-- USUARIO (CONTROLADO POR FIREBASE) -->
+<button id="userBtn">
+    <img id="userIcon" src="img/user.png" alt="Usuario">
+</button>
 
-<!-- 🔥 FORMATO IDÉNTICO AL ARCHIVO ORIGINAL -->
+        </nav>
+    </header>
+
+    <!-- JS DEL HEADER -->
+    <script type="module" src="../JS/Header.js"></script>
+
+
+
+
+
 <main class="detalle-libro">
   <div class="libro-contenedor">
 
