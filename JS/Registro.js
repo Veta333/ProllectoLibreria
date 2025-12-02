@@ -1,10 +1,22 @@
+// ----------------------------------------
+// IMPORTS DE FIREBASE
+// ----------------------------------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, setDoc, doc } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// CONFIG FIREBASE ------------------------
+import { 
+    getFirestore, 
+    setDoc, 
+    doc 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+
+// ----------------------------------------
+// CONFIG FIREBASE  (REEMPLAZA ESTO POR TU CONFIG)
+// ----------------------------------------
 const firebaseConfig = {
     apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
     authDomain: "prollectolibreria.firebaseapp.com",
@@ -14,83 +26,110 @@ const firebaseConfig = {
     appId: "1:329126591666:web:c48091699a028cacfcddab"
 };
 
+// Inicializamos Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// -----------------------------------------
+// Código oculto para afiliados
+const CODIGO_OCULTO = "PRUEBA";
 
-const CODIGO_OCULTO = "PRUEBA";   // código secreto
 
-// ------------ REGISTRO COMPRADOR ----------------
+// ----------------------------------------------------
+// FUNCIÓN: REGISTRAR COMPRADOR
+// ----------------------------------------------------
 async function registrarComprador() {
-    const email = document.getElementById("c_email").value;
-    const pass = document.getElementById("c_pass").value;
+    const nombre = document.getElementById("c_nombre").value;
+    const email  = document.getElementById("c_email").value;
+    const postal = document.getElementById("c_postal").value;
+    const pass   = document.getElementById("c_pass").value;
 
     try {
         const cred = await createUserWithEmailAndPassword(auth, email, pass);
 
         await setDoc(doc(db, "usuarios", cred.user.uid), {
             tipo: "comprador",
-            nombre: document.getElementById("c_nombre").value,
-            postal: document.getElementById("c_postal").value,
-            email: email
+            nombre,
+            email,
+            postal
         });
 
-        alert("Comprador registrado con éxito");
+        alert("✔ Registrado como comprador");
     } catch (e) {
-        alert("Error: " + e.message);
+        alert("❌ Error: " + e.message);
     }
 }
 
-// ------------ REGISTRO MENOR ----------------
+
+// ----------------------------------------------------
+// FUNCIÓN: REGISTRAR MENOR AFILIADO
+// ----------------------------------------------------
 async function registrarMenor() {
-    if (document.getElementById("m_codigo").value !== CODIGO_OCULTO) {
-        alert("Código incorrecto");
+    const codigo = document.getElementById("m_codigo").value;
+
+    if (codigo !== CODIGO_OCULTO) {
+        alert("❌ Código de confirmación incorrecto");
         return;
     }
 
-    const email = document.getElementById("m_email").value;
-    const pass = document.getElementById("m_pass").value;
+    const nombre = document.getElementById("m_nombre").value;
+    const email  = document.getElementById("m_email").value;
+    const edad   = document.getElementById("m_edad").value;
+    const pass   = document.getElementById("m_pass").value;
 
     try {
         const cred = await createUserWithEmailAndPassword(auth, email, pass);
 
         await setDoc(doc(db, "usuarios", cred.user.uid), {
-            tipo: "menor",
-            nombre: document.getElementById("m_nombre").value,
-            edad: document.getElementById("m_edad").value,
-            email: email
+            tipo: "menor_afiliado",
+            nombre,
+            email,
+            edad
         });
 
-        alert("Menor afiliado registrado");
+        alert("✔ Registrado como menor afiliado");
     } catch (e) {
-        alert("Error: " + e.message);
+        alert("❌ Error: " + e.message);
     }
 }
 
-// ------------ REGISTRO PADRE ----------------
+
+// ----------------------------------------------------
+// FUNCIÓN: REGISTRAR PADRE AFILIADO
+// ----------------------------------------------------
 async function registrarPadre() {
-    if (document.getElementById("p_codigo").value !== CODIGO_OCULTO) {
-        alert("Código incorrecto");
+    const codigo = document.getElementById("p_codigo").value;
+
+    if (codigo !== CODIGO_OCULTO) {
+        alert("❌ Código de confirmación incorrecto");
         return;
     }
 
-    const email = document.getElementById("p_email").value;
-    const pass = document.getElementById("p_pass").value;
+    const nombre = document.getElementById("p_nombre").value;
+    const email  = document.getElementById("p_email").value;
+    const direccion = document.getElementById("p_direccion").value;
+    const pass   = document.getElementById("p_pass").value;
 
     try {
         const cred = await createUserWithEmailAndPassword(auth, email, pass);
 
         await setDoc(doc(db, "usuarios", cred.user.uid), {
-            tipo: "padre",
-            nombre: document.getElementById("p_nombre").value,
-            direccion: document.getElementById("p_direccion").value,
-            email: email
+            tipo: "padre_afiliado",
+            nombre,
+            email,
+            direccion
         });
 
-        alert("Padre afiliado registrado");
+        alert("✔ Registrado como padre afiliado");
     } catch (e) {
-        alert("Error: " + e.message);
+        alert("❌ Error: " + e.message);
     }
 }
+
+
+// ----------------------------------------------------
+// HACER LAS FUNCIONES ACCESIBLES DESDE EL HTML
+// ----------------------------------------------------
+window.registrarComprador = registrarComprador;
+window.registrarMenor     = registrarMenor;
+window.registrarPadre     = registrarPadre;
