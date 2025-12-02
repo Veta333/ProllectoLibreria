@@ -9,16 +9,22 @@
     <link rel="stylesheet" href="../CSS/header.css">
     <link rel="stylesheet" href="../CSS/login.css">
     <link rel="stylesheet" href="../CSS/footer.css">
-
 </head>
 <body>
 
     <!-- HEADER -->
     <header class="header">
-        <div class="logo"><a href="Index.html">Centro de ocio Local & Librería Carral.</a></div>
+        <div class="logo">
+            <a href="Index.html">Centro de ocio Local & Librería Carral.</a>
+        </div>
 
         <nav class="nav-icons">
-            <button><img src="img/carrito.png" alt="Carrito"></button>
+            <!-- CARRITO -->
+            <button class="icon-btn">
+                <img src="img/carrito.png" alt="Carrito">
+            </button>
+
+            <!-- HAMBURGUESA -->
             <div class="hamburger-container">
                 <button class="hamburger-btn" id="menuButton">
                     <span></span>
@@ -34,9 +40,20 @@
                     <a href="Librosfuturos.html">Libros Futuros</a>
                 </nav>
             </div>
-            <button><img src="img/user.png" alt="Usuario"></button>
+
+            <!-- USUARIO (CONTROLADO POR FIREBASE) -->
+<button id="userBtn">
+    <img id="userIcon" src="img/user.png" alt="Usuario">
+</button>
+
         </nav>
     </header>
+
+    <!-- JS DEL HEADER -->
+    <script type="module" src="../JS/Header.js"></script>
+
+
+
 
     <!-- CONTENIDO PRINCIPAL -->
     <div class="contenido">

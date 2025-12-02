@@ -132,3 +132,33 @@
 .hamburger-btn.active span:nth-child(3) {
     transform: translateY(-10px) rotate(-45deg);
 }
+
+
+/* ===============================
+   ICONO DE PERFIL (USUARIO)
+================================== */
+
+#userBtn {
+    background: none;
+    border: 0;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#userIcon {
+    width: 28px;        /* Tamaño EXACTO igual a los otros iconos */
+    height: 28px;
+    object-fit: cover; /* Recorta sin deformar */
+    border-radius: 50%;/* Circular como avatar */
+}
+
+/* Ajuste en móvil */
+@media (max-width: 700px) {
+    #userIcon {
+        width: 24px;
+        height: 24px;
+    }
+}

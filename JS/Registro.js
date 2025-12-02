@@ -1,6 +1,6 @@
-// ----------------------------------------
-// IMPORTS DE FIREBASE
-// ----------------------------------------
+
+// Imports Firebase
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { 
     getAuth, 
@@ -14,9 +14,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 
-// ----------------------------------------
-// CONFIG FIREBASE (REEMPLAZAR POR LA TUYA)
-// ----------------------------------------
+
+//FIREBASE
+
 const firebaseConfig = {
     apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
     authDomain: "prollectolibreria.firebaseapp.com",
