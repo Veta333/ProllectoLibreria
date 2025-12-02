@@ -19,6 +19,7 @@
         </div>
 
         <nav class="nav-icons">
+
             <!-- CARRITO -->
             <button class="icon-btn">
                 <img src="img/carrito.png" alt="Carrito">
@@ -42,16 +43,22 @@
             </div>
 
             <!-- USUARIO (CONTROLADO POR FIREBASE) -->
-<button id="userBtn">
-    <img id="userIcon" src="img/user.png" alt="Usuario">
-</button>
+            <div style="position: relative;">
+                <button id="userBtn">
+                    <img id="userIcon" src="../IMG/Perfil.png" alt="Usuario">
+                </button>
+
+                <!-- MENÚ DESPLEGABLE DEL USUARIO -->
+                <div id="userMenu" class="user-menu">
+                    <button id="logoutBtn">Cerrar sesión</button>
+                </div>
+            </div>
 
         </nav>
     </header>
 
     <!-- JS DEL HEADER -->
     <script type="module" src="../JS/Header.js"></script>
-
 
 
 
