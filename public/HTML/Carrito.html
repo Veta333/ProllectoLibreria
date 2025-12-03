@@ -20,9 +20,9 @@
 
         <nav class="nav-icons">
 
-            <!-- CARRITO (Ahora es un enlace) -->
+            <!-- CARRITO -->
             <a href="Carrito.html" class="icon-btn">
-<img src="../IMG/carrito.png" alt="Carrito" class="icon-size">
+                <img src="../IMG/carrito.png" alt="Carrito" class="icon-size">
             </a>
 
             <!-- HAMBURGUESA -->
@@ -59,6 +59,7 @@
     <!-- JS DEL HEADER -->
     <script type="module" src="../JS/Header.js"></script>
 
+    <!-- BODY -->
     <h1 class="titulo">Carrito de Compra</h1>
 
     <div id="carritoContainer" class="carrito-lista"></div>
@@ -68,7 +69,26 @@
         <h2>Total: <span id="totalPrecio">0</span> €</h2>
     </div>
 
+<button id="btnAbrirPopup" class="btn-pagar">Pagar</button>
+
+
+
+    <!-- POPUP PAGO -->
+    <div id="popupPago" class="popup-overlay">
+        <div class="popup-contenido">
+            <h2>Pago con tarjeta</h2>
+            <p>Total a pagar: <span id="totalPago">0</span> €</p>
+            <button id="btnPagarStripe" class="pagar-btn">Pagar con tarjeta</button>
+            <button id="cerrarPopup" class="cerrar-btn">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- JS Carrito -->
     <script type="module" src="../JS/Carrito.js"></script>
+    <!-- Stripe JS -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- JS Carrito con Stripe -->
+    <script type="module" src="../JS/CarritoStripe.js"></script>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -110,24 +130,6 @@
             }
         });
     </script>
-
-    <!-- POPUP PAGO (sin modificar nada de tu estructura) -->
-    <div id="popupPago" class="popup-overlay">
-        <div class="popup-contenido">
-            <h2>Pago con tarjeta</h2>
-
-            <input type="text" placeholder="Número de tarjeta" id="cardNumber">
-            <input type="text" placeholder="Nombre del titular" id="cardName">
-
-            <div class="fila">
-                <input type="text" placeholder="Fecha de vencimiento (MM/AA)" id="cardDate">
-                <input type="text" placeholder="Código de seguridad" id="cardCVC">
-            </div>
-
-            <button id="btnPagar" class="pagar-btn">Pagar</button>
-            <button id="cerrarPopup" class="cerrar-btn">Cerrar</button>
-        </div>
-    </div>
 
 </body>
 </html>

@@ -1,140 +1,46 @@
-import {
-    getFirestore,
-    collection,
-    getDocs,
-    doc,
-    deleteDoc,
-    getDoc,
-    updateDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+document.getElementById("btnPagar").addEventListener("click", iniciarPago);
 
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+async function iniciarPago() {
+    // CARGAR CARRITO DESDE LOCALSTORAGE
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
-    authDomain: "prollectolibreria.firebaseapp.com",
-    projectId: "prollectolibreria",
-    storageBucket: "prollectolibreria.firebasestorage.app",
-    messagingSenderId: "329126591666",
-    appId: "1:329126591666:web:c48091699a028cacfcddab"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth();
-
-const contenedor = document.getElementById("carritoContainer");
-const totalPrecio = document.getElementById("totalPrecio");
-
-// --------------------------
-// Cargar carrito del usuario
-// --------------------------
-async function cargarCarrito() {
-    const user = auth.currentUser;
-
-    if (!user) {
-        contenedor.innerHTML = "<p>Debes iniciar sesión para ver el carrito.</p>";
+    if (carrito.length === 0) {
+        alert("Tu carrito está vacío");
         return;
     }
 
-    const ref = collection(db, "users", user.uid, "cart");
-    const snapshot = await getDocs(ref);
-
-    contenedor.innerHTML = "";
-    let total = 0;
-
-    snapshot.forEach(docSnap => {
-        const libro = docSnap.data();
-        const id = docSnap.id;
-
-        total += Number(libro.precio);
-
-        const item = document.createElement("div");
-        item.classList.add("item-carrito");
-
-        item.innerHTML = `
-            <div class="item-info">
-                <p><strong>${libro.titulo}</strong></p>
-                <p>Género: ${libro.genero}</p>
-                <p>Precio: ${libro.precio} €</p>
-            </div>
-
-            <div class="item-imagen">
-                <img src="${libro.imagenURL}" alt="Libro">
-            </div>
-
-            <div class="boton-eliminar" onclick="eliminarItem('${id}', '${libro.libroId}')">
-                <img src="../IMG/eliminar.png" alt="Eliminar">
-            </div>
-        `;
-
-        contenedor.appendChild(item);
-    });
-
-    totalPrecio.textContent = total.toFixed(2);
-}
-
-// --------------------------
-// Función para eliminar item
-// --------------------------
-window.eliminarItem = async function(cartId, libroId) {
-    const user = auth.currentUser;
-    if (!user) return;
+    // Transformar el carrito para Stripe
+    const items = carrito.map(producto => ({
+        name: producto.titulo,
+        price: producto.precio,
+        quantity: producto.cantidad || 1
+    }));
 
     try {
-        // 1️⃣ Subir stock del libro
-        if (libroId) {
-            const libroRef = doc(db, "Libros", libroId);
-            const libroSnap = await getDoc(libroRef);
-            if (libroSnap.exists()) {
-                const stockActual = libroSnap.data().stock || 0;
-                await updateDoc(libroRef, { stock: stockActual + 1 });
+        // Llamar a Firebase Function
+        const response = await fetch(
+            "https://us-central1-TU_PROYECTO.cloudfunctions.net/createCheckoutSession",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ items })
             }
+        );
+
+        const data = await response.json();
+
+        if (!data.url) {
+            alert("No se pudo iniciar el pago");
+            return;
         }
 
-        // 2️⃣ Eliminar del carrito
-        await deleteDoc(doc(db, "users", user.uid, "cart", cartId));
+        // Redirigir a Stripe Checkout
+        window.location.href = data.url;
 
-        // 3️⃣ Recargar carrito
-        cargarCarrito();
     } catch (error) {
-        console.error("Error eliminando del carrito:", error);
+        console.error("Error iniciando el pago:", error);
+        alert("Hubo un error iniciando el pago");
     }
-};
-
-// --------------------------
-// Inicializar
-// --------------------------
-auth.onAuthStateChanged(() => {
-    cargarCarrito();
-});
-
-// --------------------------
-// POPUP DE PAGO
-// --------------------------
-const popup = document.getElementById("popupPago");
-const btnTotal = document.getElementById("btnTotal");
-const cerrarPopup = document.getElementById("cerrarPopup");
-const btnPagar = document.getElementById("btnPagar");
-
-// Abrir popup
-if (btnTotal) {
-    btnTotal.addEventListener("click", () => {
-        popup.style.display = "flex";
-    });
-}
-
-// Cerrar popup
-if (cerrarPopup) {
-    cerrarPopup.addEventListener("click", () => {
-        popup.style.display = "none";
-    });
-}
-
-// Simular pago
-if (btnPagar) {
-    btnPagar.addEventListener("click", () => {
-        alert("Pago procesado (modo TEST)");
-    });
 }
