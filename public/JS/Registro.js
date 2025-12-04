@@ -38,7 +38,7 @@ const CODIGO_OCULTO = "PRUEBA";
 // REDIRIGIR A HOME TRAS EL REGISTRO
 // ----------------------------------------
 function redirigirHome() {
-    window.location.href = "../HTML/Index.html";
+    window.location.href = "../Index.html";
 }
 
 

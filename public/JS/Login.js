@@ -17,15 +17,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Redirige
 function redirigirHome() {
-    window.location.href = "../HTML/Index.html";
+    window.location.href = "../Index.html";
 }
 
-
-//  Comprador
-
-window.loginComprador = async function () {
+// 📌 COMPRADOR
+document.querySelector(".card:nth-child(1) button").addEventListener("click", async () => {
     const email = document.getElementById("compradorEmail").value;
     const pass = document.getElementById("compradorPass").value;
 
@@ -36,12 +33,10 @@ window.loginComprador = async function () {
     } catch (e) {
         alert("❌ Error: " + e.message);
     }
-};
+});
 
-
-// Menor
-
-window.loginMenor = async function () {
+// 📌 MENOR
+document.querySelector(".card:nth-child(2) button").addEventListener("click", async () => {
     const email = document.getElementById("menorEmail").value;
     const pass = document.getElementById("menorPass").value;
 
@@ -52,12 +47,10 @@ window.loginMenor = async function () {
     } catch (e) {
         alert("❌ Error: " + e.message);
     }
-};
+});
 
-// --------------------------
-// LOGIN PADRE
-// --------------------------
-window.loginPadre = async function () {
+// 📌 PADRE
+document.querySelector(".card:nth-child(3) button").addEventListener("click", async () => {
     const email = document.getElementById("padreEmail").value;
     const pass = document.getElementById("padrePass").value;
 
@@ -68,4 +61,4 @@ window.loginPadre = async function () {
     } catch (e) {
         alert("❌ Error: " + e.message);
     }
-};
+});
