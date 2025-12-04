@@ -6,9 +6,12 @@ import {
   getDoc,
   updateDoc,
   collection,
-  addDoc
+  addDoc,
+  query,
+  where,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 /* CONFIG FIREBASE */
 const firebaseConfig = {
@@ -36,6 +39,34 @@ const precio = document.getElementById("precio");
 const imagen = document.getElementById("imagenURL");
 const btnCarrito = document.getElementById("btnCarrito");
 
+/* Creamos el botón de wishlist en la página de detalle */
+function crearBotonWishlist() {
+  // si ya existe, no duplicar
+  if (document.getElementById("btnWishlist")) return;
+
+  const cont = document.createElement("div");
+  cont.style.display = "inline-block";
+  cont.style.verticalAlign = "middle";
+  cont.style.marginLeft = "12px";
+
+  const btn = document.createElement("button");
+  btn.id = "btnWishlist";
+  btn.textContent = "Añadir a deseos";
+  btn.style.padding = "10px 16px";
+  btn.style.borderRadius = "6px";
+  btn.style.border = "1px solid #ccc";
+  btn.style.background = "#fff";
+  btn.style.cursor = "pointer";
+
+  cont.appendChild(btn);
+
+  // insertar después del btnCarrito
+  const cabeza = document.querySelector(".libro-compra");
+  if (cabeza) cabeza.appendChild(cont);
+
+  btn.addEventListener("click", onAñadirWishlist);
+}
+
 /* CARGAR LIBRO */
 async function cargarLibro() {
   if (!libroId) {
@@ -54,23 +85,23 @@ async function cargarLibro() {
       if (imagen) {
         imagen.src = data.imagenURL && data.imagenURL !== "" ? data.imagenURL : "/IMG/default.jpg";
       }
-      // Guardar stock actual (atributo dataset para posible uso)
       if (btnCarrito) btnCarrito.dataset.stock = data.stock ?? 0;
     } else {
       if (titulo) titulo.textContent = "Libro no encontrado";
     }
   } catch (err) {
     console.error("Error al cargar libro:", err);
+  } finally {
+    crearBotonWishlist();
   }
 }
 cargarLibro();
 
-/* AÑADIR AL CARRITO Y BAJAR STOCK */
+/* AÑADIR AL CARRITO Y BAJAR STOCK (sin tocar) */
 if (btnCarrito) {
   btnCarrito.addEventListener("click", async () => {
     try {
       const user = auth.currentUser;
-      // Si quieres forzar login en cliente: 
       if (!user) {
         alert("Debes iniciar sesión para añadir al carrito.");
         return;
@@ -88,7 +119,6 @@ if (btnCarrito) {
         return;
       }
 
-
       const cartRef = await addDoc(collection(db, "users", user.uid, "cart"), {
         titulo: libroData.titulo,
         autor: libroData.autor,
@@ -100,9 +130,7 @@ if (btnCarrito) {
         creadoEn: new Date()
       });
 
-   
       let carritoLocal = JSON.parse(localStorage.getItem("carrito")) || [];
-
       carritoLocal.push({
         titulo: libroData.titulo,
         precio: libroData.precio,
@@ -111,9 +139,7 @@ if (btnCarrito) {
         libroId: libroId,
         cartDocId: cartRef.id
       });
-
       localStorage.setItem("carrito", JSON.stringify(carritoLocal));
-
 
       await updateDoc(libroRef, { stock: (libroData.stock || 1) - 1 });
 
@@ -124,3 +150,69 @@ if (btnCarrito) {
     }
   });
 }
+
+/*Wishlist: añadir */
+async function onAñadirWishlist(e) {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Debes iniciar sesión para añadir a la lista de deseos.");
+      return;
+    }
+
+    // prevenir duplicados: buscar si ya existe libroId en la colección wishlist
+    const q = query(collection(db, "users", user.uid, "wishlist"), where("libroId", "==", libroId));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      alert("Este libro ya está en tu lista de deseos.");
+      return;
+    }
+
+    // obtener datos del libro para guardar
+    const libroRef = doc(db, "Libros", libroId);
+    const libroSnap = await getDoc(libroRef);
+    if (!libroSnap.exists()) {
+      alert("Libro no encontrado.");
+      return;
+    }
+    const libroData = libroSnap.data();
+
+    await addDoc(collection(db, "users", user.uid, "wishlist"), {
+      titulo: libroData.titulo || "",
+      autor: libroData.autor || "",
+      precio: libroData.precio || 0,
+      imagenURL: libroData.imagenURL || "/IMG/default.jpg",
+      libroId: libroId,
+      creadoEn: new Date()
+    });
+
+    alert("Añadido a tu lista de deseos ⭐");
+    // actualizar contador del header (si existe)
+    actualizarContadorWishlist();
+  } catch (err) {
+    console.error("Error añadiendo a wishlist:", err);
+    alert("Error al añadir a la lista de deseos.");
+  }
+}
+
+/* Contador en header */
+async function actualizarContadorWishlist() {
+  try {
+    const el = document.getElementById("wishlistCount");
+    const user = auth.currentUser;
+    if (!el) return;
+    if (!user) {
+      el.textContent = "0";
+      return;
+    }
+    const snap = await getDocs(collection(db, "users", user.uid, "wishlist"));
+    el.textContent = String(snap.size || 0);
+  } catch (err) {
+    console.error("Error contador wishlist:", err);
+  }
+}
+
+/* cuando el usuario cambie (login/logout) actualizamos contador */
+onAuthStateChanged(auth, (user) => {
+  actualizarContadorWishlist();
+});

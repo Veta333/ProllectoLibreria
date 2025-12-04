@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wishlist - Librería Carral</title>
+
+  <link rel="stylesheet" href="../CSS/header.css">
+  <link rel="stylesheet" href="../CSS/libros.css">
+  <link rel="stylesheet" href="../CSS/footer.css">
+
+  <style>
+    .wishlist-page { padding: 40px; min-height: calc(100vh - 160px); box-sizing: border-box; background:#f5f6f8; }
+    .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 18px; max-width:1200px; margin: 0 auto; }
+    .wish-card { background:white; border-radius:10px; padding:12px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); display:flex; flex-direction:column; gap:8px; }
+    .wish-card img { width:100%; height:160px; object-fit:cover; border-radius:8px; }
+    .wish-card h3 { margin:0; font-size:16px; }
+    .wish-actions { margin-top:auto; display:flex; gap:8px; align-items:center; }
+    .btn-outline { padding:8px 12px; border:1px solid #007bff; background:transparent; color:#007bff; border-radius:6px; cursor:pointer; }
+    .btn-danger { padding:8px 12px; border:1px solid #e03e2d; background:#e03e2d; color:white; border-radius:6px; cursor:pointer; }
+    .empty { text-align:center; padding:60px 0; color:#666; }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo"><a href="/index.html">Centro de ocio Local & Librería Carral.</a></div>
+    <nav class="nav-icons">
+      <a href="Carrito.html" class="icon-btn"><img src="../IMG/carrito.png" class="icon-size"></a>
+      <a href="Carrito.html" class="icon-btn"><!-- placeholder --></a>
+    </nav>
+  </header>
+
+  <main class="wishlist-page">
+    <h1 style="text-align:center; margin-bottom:20px;">Mi lista de deseos</h1>
+    <div id="wishlistGrid" class="wishlist-grid"></div>
+    <div id="emptyMsg" class="empty" style="display:none;">Tu lista de deseos está vacía.</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-left"><a href="Contacto.html">Cómo contactar</a><a href="Privacidad.html">Privacidad</a></div>
+    <div class="footer-right">
+      <a href="#"><img src="../IMG/linkedin.png"></a>
+      <a href="#"><img src="../IMG/instagram.png"></a>
+      <a href="#"><img src="../IMG/twitter.png"></a>
+      <a href="#"><img src="../IMG/facebook.png"></a>
+    </div>
+  </footer>
+
+  <script type="module" src="../JS/Wishlist.js"></script>
+</body>
+</html>

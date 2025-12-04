@@ -193,3 +193,23 @@
     height: 54px;
     object-fit: cover;
 }
+
+.icon-btn { position: relative; display: inline-flex; align-items: center; }
+.icon-size { width: 28px; height: 28px; object-fit: contain; }
+
+/* badge sobre el icono */
+.header-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ffcc00;
+  color: #000;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
+  line-height: 1;
+}
