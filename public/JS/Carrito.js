@@ -1,7 +1,18 @@
-document.getElementById("btnPagar").addEventListener("click", iniciarPago);
+document.addEventListener("DOMContentLoaded", () => {
+
+    const btnPagar = document.getElementById("btnPagarStripe");
+
+    if (!btnPagar) {
+        console.error("❌ No se encontró el botón con id='btnPagarStripe'");
+        return;
+    }
+
+    btnPagar.addEventListener("click", iniciarPago);
+});
+
 
 async function iniciarPago() {
-    // CARGAR CARRITO DESDE LOCALSTORAGE
+
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
     if (carrito.length === 0) {
@@ -9,7 +20,7 @@ async function iniciarPago() {
         return;
     }
 
-    // Transformar el carrito para Stripe
+    // Preparar items
     const items = carrito.map(producto => ({
         name: producto.titulo,
         price: producto.precio,
@@ -17,7 +28,6 @@ async function iniciarPago() {
     }));
 
     try {
-        // Llamar a Firebase Function
         const response = await fetch(
             "https://us-central1-TU_PROYECTO.cloudfunctions.net/createCheckoutSession",
             {
@@ -36,7 +46,6 @@ async function iniciarPago() {
             return;
         }
 
-        // Redirigir a Stripe Checkout
         window.location.href = data.url;
 
     } catch (error) {

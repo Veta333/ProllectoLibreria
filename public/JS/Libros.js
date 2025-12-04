@@ -15,15 +15,15 @@ const db = getFirestore(app);
 
 let librosCache = [];
 
-// =====================================================
-// 🔥 Leer TODOS los libros de la colección
-// =====================================================
+
+
+//Cargar TODOS los libros
+
 async function cargarLibros() {
     try {
         console.log("Cargando colección 'Libros'...");
 
         const snap = await getDocs(collection(db, "Libros"));
-
         console.log("Documentos encontrados:", snap.size);
 
         librosCache = snap.docs.map(doc => ({
@@ -40,9 +40,10 @@ async function cargarLibros() {
     }
 }
 
-// =====================================================
-// 🎨 Pintar tarjetas
-// =====================================================
+
+
+//  Pintar tarjetas de libros
+
 function pintarLibros(lista) {
     const grid = document.getElementById("gridLibros");
     grid.innerHTML = "";
@@ -56,12 +57,13 @@ function pintarLibros(lista) {
         const tarjeta = document.createElement("a");
         tarjeta.classList.add("tarjeta");
 
-        // ✅ AQUÍ VA EL ENLACE CORRECTO
-        tarjeta.href = `../HTML/DetalleLibro.html?id=${libro.id}`;
 
-        const imagen = libro.imagenURL && libro.imagenURL.trim() !== ""
+        tarjeta.href = `/HTML/DetalleLibro.html?id=${libro.id}`;
+
+ 
+        const imagen = (libro.imagenURL && libro.imagenURL.trim() !== "")
             ? libro.imagenURL
-            : "img/no-image.png";
+            : "../IMG/default.jpg";
 
         tarjeta.innerHTML = `
             <div class="imagen" style="background-image:url('${imagen}')"></div>
@@ -73,9 +75,9 @@ function pintarLibros(lista) {
     });
 }
 
-// =====================================================
-// 🔍 Buscador en tiempo real
-// =====================================================
+
+//Buscador dinámico
+
 document.getElementById("buscadorInput").addEventListener("input", () => {
     const texto = document.getElementById("buscadorInput").value.toLowerCase();
 
@@ -86,7 +88,8 @@ document.getElementById("buscadorInput").addEventListener("input", () => {
     pintarLibros(filtrados);
 });
 
-// =====================================================
-// 🚀 Iniciar carga
-// =====================================================
+
+
+// Iniciar carga al arrancar
+
 cargarLibros();
