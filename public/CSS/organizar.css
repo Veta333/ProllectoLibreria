@@ -73,9 +73,7 @@ textarea {
     height: 90px;
 }
 
-/* =============================
-   BOTÓN
-============================= */
+
 .btn-confirmar {
     width: 100%;
     padding: 14px;
@@ -93,9 +91,7 @@ textarea {
     background: black;
 }
 
-/* =============================
-   MENSAJE
-============================= */
+
 #msg {
     margin-top: 18px;
     text-align: center;

@@ -1,6 +1,6 @@
-/* =============================== */
+
 /* CONTENEDOR PRINCIPAL */
-/* =============================== */
+
 html, body {
     height: 100%;
     margin: 0;
@@ -42,9 +42,9 @@ main.privacidad {
     display: block;
 }
 
-/* =============================== */
-/* RESPONSIVE: tablet y pantallas medianas */
-/* =============================== */
+
+/*  tablet y pantallas medianas */
+
 @media (max-width: 900px) {
     main.privacidad {
         flex-direction: column;
@@ -63,9 +63,9 @@ main.privacidad {
     }
 }
 
-/* =============================== */
-/* RESPONSIVE: móviles */
-/* =============================== */
+
+/*  móviles */
+
 @media (max-width: 480px) {
     main.privacidad {
         padding: 16px 12px;
