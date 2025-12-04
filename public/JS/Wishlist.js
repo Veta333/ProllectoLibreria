@@ -32,14 +32,20 @@ function renderItem(docSnap) {
     <div style="color:#666; font-size:14px">${(data.autor||'')}</div>
     <div style="font-weight:700; margin-top:6px">${(data.precio? data.precio + '€' : '')}</div>
     <div class="wish-actions">
-      <button class="btn-outline view-detail" data-libroid="${data.libroId}">Ver detalle</button>
+      <button class="btn-outline view-detail" data-libroid="${data.libroId}" data-tipo="${data.tipo || 'normal'}">Ver detalle</button>
       <button class="btn-danger remove-wish" data-id="${id}">Eliminar</button>
     </div>
   `;
   grid.appendChild(card);
 
-  card.querySelector(".view-detail").addEventListener("click", () => {
-    window.location.href = `/HTML/DetalleLibro.html?id=${data.libroId}`;
+  card.querySelector(".view-detail").addEventListener("click", (ev) => {
+    const libId = ev.currentTarget.getAttribute("data-libroid");
+    const tipo = ev.currentTarget.getAttribute("data-tipo");
+    if (tipo === "futuro") {
+      window.location.href = `/HTML/DetalleLibro_Futuro.html?id=${libId}`;
+    } else {
+      window.location.href = `/HTML/DetalleLibro.html?id=${libId}`;
+    }
   });
 
   card.querySelector(".remove-wish").addEventListener("click", async (e) => {
@@ -50,7 +56,6 @@ function renderItem(docSnap) {
       if (grid.children.length === 0) {
         emptyMsg.style.display = "block";
       }
-      // actualizar contador en header si existe
       const el = document.getElementById("wishlistCount");
       if (el) el.textContent = String(Math.max(0, Number(el.textContent || 0) - 1));
     } catch (err) {
@@ -69,7 +74,6 @@ async function cargarWishlist(uid) {
     return;
   }
   snap.docs.forEach(renderItem);
-  // actualizar contador header
   const el = document.getElementById("wishlistCount");
   if (el) el.textContent = String(snap.size);
 }
