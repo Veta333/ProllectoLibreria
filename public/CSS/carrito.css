@@ -1,6 +1,4 @@
-/* ------------------------ */
-/*   ESTILOS BASE PANTALLA  */
-/* ------------------------ */
+
 
 html, body {
     height: 100%;
@@ -23,20 +21,18 @@ body {
     margin-top: 20px;
 }
 
-/* ------------------------ */
-/*     CONTENEDOR LISTA     */
-/* ------------------------ */
+
+/* Contenedor */
+
 
 .carrito-lista {
     width: 90%;
     max-width: 900px;
     margin: 20px auto;
-    flex: 1; /* Esto hace que crezca y llene la pantalla */
+    flex: 1; 
 }
 
-/* ------------------------ */
-/*    TARJETA DEL ARTÍCULO  */
-/* ------------------------ */
+
 
 .item-carrito {
     background: #b5b5b5;
@@ -91,9 +87,7 @@ body {
     width: 28px;
 }
 
-/* -------------- */
-/*  TOTAL FINAL   */
-/* -------------- */
+
 
 .total-container {
     width: 90%;
@@ -105,9 +99,7 @@ body {
     text-align: center;
 }
 
-/* ------------------------ */
-/*      RESPONSIVE          */
-/* ------------------------ */
+
 
 @media (max-width: 600px) {
 
@@ -135,22 +127,20 @@ body {
 }
 
 
-/* ========================= */
-/*       POPUP DE PAGO       */
-/* ========================= */
+
 
 .popup-overlay {
-    display: none; /* Oculto inicialmente */
-    position: fixed;   /* Fijo por encima de toda la página */
+    display: none; 
+    position: fixed;   
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.65); /* oscurece */
+    background: rgba(0, 0, 0, 0.65);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Lo hace estar encima de todo */
+    z-index: 9999;
 }
 
 .popup-contenido {
@@ -187,9 +177,9 @@ body {
     color: white;
 }
 
-/* ========================= */
-/*       POPUP DE PAGO       */
-/* ========================= */
+
+/* POPUP DE PAGO */
+
 
 .popup-overlay {
     display: none;

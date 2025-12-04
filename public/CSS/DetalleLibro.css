@@ -1,4 +1,4 @@
-/* CONTENEDOR PRINCIPAL = PANTALLA COMPLETA */
+/* CONTENEDOR PRINCIPAL */
 .detalle-libro {
     width: 100vw;
     height: 100vh;
@@ -101,14 +101,14 @@
 }
 
 
-/* Elimina cualquier margen inesperado del documento */
+
 html, body {
     margin: 0 !important;
     padding: 0 !important;
     width: 100%;
 }
 
-/* Obliga header y footer a ocupar TODO el ancho */
+
 header, footer {
     width: 100vw !important;
     margin: 0 !important;
@@ -117,7 +117,7 @@ header, footer {
     box-sizing: border-box;
 }
 
-/* Obliga el contenido a ajustarse exactamente entre ellos */
+
 .detalle-libro {
     width: 100vw;
     min-height: calc(100vh - (var(--header-h, 0px) + var(--footer-h, 0px)));
@@ -127,7 +127,7 @@ header, footer {
 }
 
 
-/* POPUP FLOTANTE “Añadido al carrito” */
+/* POPUP */
 .mensaje-carrito {
     position: fixed;
     bottom: 30px;

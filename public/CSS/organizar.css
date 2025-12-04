@@ -1,27 +1,21 @@
-/* =============================
-   RESET BÁSICO
-============================= */
+/* RESET BÁSICO */
 body {
-    margin: 0;       /* quitar margen del navegador */
+    margin: 0;      
     padding: 0;
     background: #e6e6e6;
     font-family: Arial, sans-serif;
 }
 
-/* =============================
-   ZONA CENTRAL (entre header y footer)
-============================= */
+/* ZONA CENTRAL (entre header y footer)*/
 .event-wrapper {
     display: flex;
     justify-content: center;
-    align-items: center;   /* centrado vertical */
+    align-items: center;   
     min-height: calc(100vh - 160px);
     padding: 20px;
 }
 
-/* =============================
-   TARJETA DEL FORMULARIO
-============================= */
+/*TARJETA DEL FORMULARIO*/
 .event-card {
     background: #fff;
     width: 420px;
@@ -37,9 +31,7 @@ body {
     color: #222;
 }
 
-/* =============================
-   CAMPOS
-============================= */
+/* CAMPOS */
 .input-group {
     margin-bottom: 18px;
 }

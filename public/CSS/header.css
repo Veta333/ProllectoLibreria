@@ -1,6 +1,4 @@
-/* ===============================
-   HEADER
-================================== */
+
 
 * { box-sizing: border-box; }
 
@@ -42,7 +40,7 @@
     object-fit: contain;
 }
 
-/* ===== HEADER RESPONSIVO ===== */
+
 @media (max-width: 700px) {
     .header {
         flex-direction: column;
@@ -56,9 +54,7 @@
 
 
 
-/* ===============================
-   BOTÓN HAMBURGUESA
-================================== */
+
 
 .hamburger-container {
     position: relative;
@@ -85,9 +81,7 @@
     transition: 0.3s;
 }
 
-/* ===============================
-   MENÚ DESPLEGABLE
-================================== */
+
 
 .menu {
     position: absolute;
@@ -114,14 +108,11 @@
     background: #333;
 }
 
-/* Mostrar menú cuando esté activo */
+
 .menu.show {
     display: flex;
 }
 
-/* ===============================
-   ANIMACIÓN DEL ICONO (opcional)
-================================== */
 
 .hamburger-btn.active span:nth-child(1) {
     transform: translateY(10px) rotate(45deg);
@@ -134,9 +125,7 @@
 }
 
 
-/* ===============================
-   ICONO DE PERFIL (USUARIO)
-================================== */
+
 
 #userBtn {
     background: none;
@@ -149,10 +138,10 @@
 }
 
 #userIcon {
-    width: 28px;        /* Tamaño EXACTO igual a los otros iconos */
+    width: 28px;       
     height: 28px;
-    object-fit: cover; /* Recorta sin deformar */
-    border-radius: 50%;/* Circular como avatar */
+    object-fit: cover; 
+    border-radius: 50%;
 }
 
 /* Ajuste en móvil */
@@ -173,7 +162,7 @@
     border-radius: 6px;
     padding: 10px 0;
     width: 140px;
-    display: none;            /* oculto por defecto */
+    display: none;            
     flex-direction: column;
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     z-index: 999;

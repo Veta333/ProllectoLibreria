@@ -75,7 +75,7 @@ body {
     padding: 0;
 }
 
-/* SOLO elimina los márgenes del body */
+/* elimina los márgenes del body */
 body {
     margin: 0;
     padding: 0;
@@ -199,7 +199,7 @@ body {
 
 @media (max-width: 768px) {
   .evento-card {
-    grid-template-columns: 1fr;  /* Columna única */
+    grid-template-columns: 1fr;  
     width: 95%;
     max-width: none;
     height: 80vh;

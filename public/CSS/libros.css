@@ -1,4 +1,4 @@
-/* --- Ajustes globales para ocupar toda la pantalla --- */
+
 html, body {
     height: 100%;
     margin: 0;
@@ -9,27 +9,24 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: #f5f5f5; /* Opcional */
+    background: #f5f5f5; 
 }
 
-/* ===================== AJUSTES HEADER ===================== */
-/* No tocamos el header directamente para no romper proporciones */
 
-/* Ajuste solo en el contenedor del menú hamburguesa */
 .hamburger-container {
-    position: relative; /* contenedor de referencia para el menu absolute */
-    z-index: 100;       /* asegura que el menú esté por encima del contenido */
+    position: relative; 
+    z-index: 100;      
 }
 
-/* --- Contenedor principal --- */
+/* Contenedor principal */
 .catalogo {
     padding: 30px 40px;
     width: 100%;
-    flex: 1; /* Ocupa todo el alto disponible */
+    flex: 1; 
     box-sizing: border-box;
 }
 
-/* --- Buscador --- */
+/*  Buscador  */
 .buscador {
     display: flex;
     width: 60%;
@@ -54,7 +51,7 @@ body {
     cursor: pointer;
 }
 
-/* --- Grid de tarjetas --- */
+/* Grid de tarjetas  */
 .grid-tarjetas {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -62,7 +59,7 @@ body {
     width: 100%;
 }
 
-/* --- Tarjetas --- */
+/* Tarjetas */
 .tarjeta {
     display: block;
     text-decoration: none;
@@ -82,7 +79,7 @@ body {
 /* Imagen dentro de la tarjeta */
 .tarjeta .imagen {
     width: 100%;
-    padding-top: 100%; /* cuadrada */
+    padding-top: 100%; 
     background: #00c400;
     background-size: cover;
     background-position: center;
