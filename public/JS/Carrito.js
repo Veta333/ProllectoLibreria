@@ -1,12 +1,14 @@
-// FIREBASE
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { 
     getFirestore, 
     doc, 
-    updateDoc, 
-    getDoc 
+    getDoc, 
+    updateDoc 
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
+// -----------------------------------------
+// FIREBASE
+// -----------------------------------------
 const firebaseConfig = {
     apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
     authDomain: "prollectolibreria.firebaseapp.com",
@@ -19,140 +21,163 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-// CARGAR CARRITO
-
+// -----------------------------------------
+// LOCAL STORAGE
+// -----------------------------------------
 function cargarCarrito() {
     return JSON.parse(localStorage.getItem("carrito")) || [];
 }
-
-// GUARDAR CARRITO
 
 function guardarCarrito(carrito) {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
+// -----------------------------------------
+// FIREBASE: AUMENTAR STOCK
+// -----------------------------------------
+async function aumentarStockFirebase(libroId) {
+    try {
+        const ref = doc(db, "Libros", libroId);
+        const snap = await getDoc(ref);
 
-// RESTAURAR STOCK EN FIRESTORE
+        if (!snap.exists()) {
+            console.warn("❗ El libro no existe:", libroId);
+            return;
+        }
 
-async function sumarStock(libroId) {
-    const ref = doc(db, "Libros", libroId);
-    const snap = await getDoc(ref);
+        const stockActual = snap.data().stock ?? 0;
 
-    if (!snap.exists()) return;
+        await updateDoc(ref, { stock: stockActual + 1 });
 
-    const data = snap.data();
-    const nuevoStock = (data.stock || 0) + 1;
+        console.log(`✔ Stock aumentado (+1) para libro ${libroId}`);
 
-    await updateDoc(ref, { stock: nuevoStock });
+    } catch (error) {
+        console.error("❌ Error aumentando stock:", error);
+    }
 }
 
-
+// -----------------------------------------
 // PINTAR CARRITO
-
-function pintarCarrito() {
-    const cont = document.getElementById("carritoContainer");
+// -----------------------------------------
+export function pintarCarrito() {
+    const contenedor = document.getElementById("carritoContainer");
     const totalSpan = document.getElementById("totalPrecio");
 
     const carrito = cargarCarrito();
-    cont.innerHTML = "";
+    contenedor.innerHTML = "";
 
     let total = 0;
 
     carrito.forEach((item, index) => {
-        total += item.precio;
+        total += item.precio * (item.cantidad || 1);
 
         const div = document.createElement("div");
-        div.className = "item-carrito";
+        div.classList.add("item-carrito");
 
         div.innerHTML = `
             <img src="${item.imagenURL}" class="img-carrito">
-            <div>
+
+            <div class="info-carrito">
                 <h3>${item.titulo}</h3>
-                <p>${item.precio}€</p>
+                <p>${item.precio} €</p>
             </div>
-            <button class="btn-eliminar" data-index="${index}" data-id="${item.libroId}">
+
+            <button class="btn-eliminar" data-index="${index}">
                 ❌
             </button>
         `;
 
-        cont.appendChild(div);
+        contenedor.appendChild(div);
     });
 
     totalSpan.textContent = total.toFixed(2);
 
-    // activar botones eliminar
-    document.querySelectorAll(".btn-eliminar").forEach(btn => {
-        btn.onclick = async e => {
-            const index = e.target.dataset.index;
-            const libroId = e.target.dataset.id;
+    activarBotonesEliminar();
+}
 
-            await sumarStock(libroId);
+// -----------------------------------------
+// ELIMINAR UN PRODUCTO
+// -----------------------------------------
+function activarBotonesEliminar() {
+    document.querySelectorAll(".btn-eliminar").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const index = btn.getAttribute("data-index");
 
             let carrito = cargarCarrito();
+            const item = carrito[index];
+
+            if (!item) return;
+
+            // 1. Aumentar stock en Firebase
+            await aumentarStockFirebase(item.libroId);
+
+            // 2. Eliminar del carrito
             carrito.splice(index, 1);
             guardarCarrito(carrito);
 
+            // 3. Repintar
             pintarCarrito();
-        };
+        });
     });
 }
 
-// POPUP
-
+// -----------------------------------------
+// POPUP PAGO
+// -----------------------------------------
 const popup = document.getElementById("popupPago");
-document.getElementById("btnAbrirPopup").onclick = () => {
+const btnAbrir = document.getElementById("btnAbrirPopup");
+const btnCerrar = document.getElementById("cerrarPopup");
+
+btnAbrir.onclick = () => {
     document.getElementById("totalPago").textContent =
         document.getElementById("totalPrecio").textContent;
-
     popup.style.display = "flex";
 };
 
-document.getElementById("cerrarPopup").onclick = () =>
+btnCerrar.onclick = () => {
     popup.style.display = "none";
+};
 
-// STRIPE
-
-document.getElementById("btnPagarStripe").onclick = async () => {
+// -----------------------------------------
+// STRIPE PAGO
+// -----------------------------------------
+document.getElementById("btnPagarStripe").addEventListener("click", async () => {
     const carrito = cargarCarrito();
 
     if (carrito.length === 0) {
-        alert("Carrito vacío");
+        alert("Tu carrito está vacío");
         return;
     }
 
     const items = carrito.map(p => ({
         name: p.titulo,
         price: p.precio,
-        quantity: 1
+        quantity: p.cantidad || 1
     }));
 
     try {
         const res = await fetch("/api/create-checkout-session", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ items })
         });
 
         const data = await res.json();
 
         if (!data.url) {
-            console.error("Error:", data);
-            alert("Error con Stripe");
+            alert("No se pudo iniciar el pago");
             return;
         }
 
         window.location.href = data.url;
 
     } catch (err) {
-        console.error("Stripe Error:", err);
-        alert("Error con Stripe");
+        console.error("❌ Error Stripe:", err);
+        alert("Hubo un error con Stripe");
     }
-};
+});
 
-
-// INICIALIZAR
-
+// -----------------------------------------
+// INICIO
+// -----------------------------------------
 pintarCarrito();
