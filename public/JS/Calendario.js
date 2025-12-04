@@ -25,9 +25,8 @@ const mesesNombres = [
     "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
 ];
 
-// =============================
-// 🔥 Cargar eventos desde Firebase
-// =============================
+//  Cargar eventos desde Firebase
+
 async function cargarEventos() {
     try {
         const snap = await getDocs(collection(db, "eventos"));
@@ -38,9 +37,9 @@ async function cargarEventos() {
     }
 }
 
-// =============================
-// 🎨 Pintar el calendario
-// =============================
+
+//  Pintar el calendario
+
 function pintarCalendario() {
 
     document.getElementById("anoTexto").textContent = ano;
@@ -96,7 +95,7 @@ function pintarCalendario() {
             return fechaEvento === iso;
         });
 
-        // Si hay eventos, los mostramos y añadimos clic
+
         if (eventosDia.length > 0) {
             celda.style.cursor = "pointer";
 
@@ -116,9 +115,9 @@ function pintarCalendario() {
     }
 }
 
-// =============================
-// 📌 Abrir el desplegable
-// =============================
+
+// Abrir el desplegable
+
 function abrirEvento(evento) {
     document.getElementById("eventoOverlay").classList.remove("oculto");
 
@@ -146,16 +145,16 @@ function abrirEvento(evento) {
         evento.imagenURL || "";
 }
 
-// =============================
-// ❌ Cerrar el desplegable
-// =============================
+
+//  Cerrar el desplegable
+
 document.getElementById("cerrarOverlay").addEventListener("click", () => {
     document.getElementById("eventoOverlay").classList.add("oculto");
 });
 
-// =============================
-// ⏪ Navegación
-// =============================
+
+// Navegación
+
 document.getElementById("prevMonth").onclick = () => {
     mes--;
     if (mes < 0) { mes = 11; ano--; }
@@ -171,7 +170,7 @@ document.getElementById("nextMonth").onclick = () => {
 document.getElementById("prevYear").onclick = () => { ano--; pintarCalendario(); };
 document.getElementById("nextYear").onclick = () => { ano++; pintarCalendario(); };
 
-// =============================
-// 🚀 Iniciar
-// =============================
+
+// Iniciar
+
 cargarEventos();

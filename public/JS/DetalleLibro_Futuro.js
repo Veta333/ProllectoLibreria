@@ -47,7 +47,7 @@ async function cargarLibroFuturo() {
         const libro = snap.data();
 
         // Rellenar datos en pantalla
-        img.src = libro.imagenURL || "img/no-image.png";
+        img.src = libro.imagenURL || "../IMG/default.jpg";
         titulo.textContent = libro.titulo || "Sin título";
         autor.textContent = libro.autor || "Autor desconocido";
         genero.textContent = libro.genero || "Sin descripción disponible";

@@ -15,9 +15,9 @@ const db = getFirestore(app);
 
 let librosCache = [];
 
-// =====================================================
-// 🔥 Leer TODOS los libros de la colección Libros_Futuros
-// =====================================================
+
+//  Leer TODOS los libros de la colección Libros_Futuros
+
 async function cargarLibros() {
     try {
         console.log("Cargando colección 'Libros_Futuros'...");
@@ -40,9 +40,8 @@ async function cargarLibros() {
     }
 }
 
-// =====================================================
-// 🎨 Pintar tarjetas
-// =====================================================
+// Pintar tarjetas
+
 function pintarLibros(lista) {
     const grid = document.getElementById("gridLibros");
     grid.innerHTML = "";
@@ -56,12 +55,12 @@ function pintarLibros(lista) {
         const tarjeta = document.createElement("a");
         tarjeta.classList.add("tarjeta");
 
-        // 🔗 Enlace a detalle
+ 
         tarjeta.href = `../HTML/DetalleLibro_Futuro.html?id=${libro.id}`;
 
         const imagen = libro.imagenURL && libro.imagenURL.trim() !== ""
             ? libro.imagenURL
-            : "img/no-image.png";
+            : "../IMG/default.jpg";
 
         tarjeta.innerHTML = `
             <div class="imagen" style="background-image:url('${imagen}')"></div>
@@ -73,9 +72,9 @@ function pintarLibros(lista) {
     });
 }
 
-// =====================================================
-// 🔍 Buscador en tiempo real
-// =====================================================
+
+//  Buscador en tiempo real
+
 document.getElementById("buscadorInput").addEventListener("input", () => {
     const texto = document.getElementById("buscadorInput").value.toLowerCase();
 
@@ -86,7 +85,6 @@ document.getElementById("buscadorInput").addEventListener("input", () => {
     pintarLibros(filtrados);
 });
 
-// =====================================================
-// 🚀 Iniciar carga
-// =====================================================
+//  Iniciar carga
+
 cargarLibros();

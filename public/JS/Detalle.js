@@ -134,7 +134,7 @@ let carritoLocal = JSON.parse(localStorage.getItem("carrito")) || [];
 carritoLocal.push({
     titulo: libroData.titulo,
     precio: libroData.precio,
-    imagenURL: libroData.imagenURL || "../IMG/no-image.png",
+    imagenURL: libroData.imagenURL || "../IMG/default.jpg",
     cantidad: 1
 });
 
