@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 function redirigirHome() {
-  window.location.href = "/Index.html";
+  window.location.href = "../Index.html";
 }
 
 // helper de logging
