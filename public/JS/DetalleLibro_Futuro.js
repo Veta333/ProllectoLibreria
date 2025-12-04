@@ -13,9 +13,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// =====================================================
-// 📌 Obtener ID desde la URL
-// =====================================================
+
+//  Obtener ID desde la URL
+
 const params = new URLSearchParams(window.location.search);
 const libroId = params.get("id");
 
@@ -26,9 +26,9 @@ const autor = document.getElementById("autor");
 const genero = document.getElementById("genero");
 const precio = document.getElementById("precio");
 
-// =====================================================
-// 🔥 Cargar datos del libro desde Libros_Futuros
-// =====================================================
+
+//  Cargar datos del libro desde Libros_Futuros
+
 async function cargarLibroFuturo() {
     if (!libroId) {
         titulo.textContent = "Error: ID no especificada.";

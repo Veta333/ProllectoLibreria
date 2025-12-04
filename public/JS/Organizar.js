@@ -22,7 +22,7 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
 
     const titulo = document.getElementById("titulo").value;
     const ubicacion = document.getElementById("ubicacion").value;
-    const fechaInput = document.getElementById("fecha").value; // string YYYY-MM-DD
+    const fechaInput = document.getElementById("fecha").value; 
     const edades = document.getElementById("edades").value;
     const descripcion = document.getElementById("descripcion").value;
     const imagenURL = document.getElementById("imagenURL").value.trim() || "";
@@ -31,11 +31,11 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
         await addDoc(collection(db, "eventos"), {
             titulo,
             ubicacion,
-            fecha: Timestamp.fromDate(new Date(fechaInput)), // <-- Aquí lo convertimos a Timestamp
+            fecha: Timestamp.fromDate(new Date(fechaInput)), 
             edades,
             descripcion,
             imagenURL,
-            creado: Timestamp.fromDate(new Date()) // guardamos también la fecha de creación como Timestamp
+            creado: Timestamp.fromDate(new Date()) 
         });
 
         document.getElementById("msg").innerText = "Evento guardado correctamente 👍";

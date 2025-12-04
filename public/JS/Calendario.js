@@ -50,7 +50,7 @@ function pintarCalendario() {
 
     const primerDia = new Date(ano, mes, 1);
     let empieza = primerDia.getDay();
-    if (empieza === 0) empieza = 7; // Ajuste para lunes como primer día
+    if (empieza === 0) empieza = 7; 
 
     const diasMes = new Date(ano, mes + 1, 0).getDate();
 

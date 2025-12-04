@@ -34,17 +34,17 @@ const db = getFirestore(app);
 const CODIGO_OCULTO = "PRUEBA";
 
 
-// ----------------------------------------
-// REDIRIGIR A HOME TRAS EL REGISTRO
-// ----------------------------------------
+
+// REDIRIGIR A HOME 
+
 function redirigirHome() {
     window.location.href = "../Index.html";
 }
 
 
-// ----------------------------------------
+
 //    REGISTRAR COMPRADOR
-// ----------------------------------------
+
 async function registrarComprador() {
     const nombre = document.getElementById("c_nombre").value;
     const email  = document.getElementById("c_email").value;
@@ -70,9 +70,9 @@ async function registrarComprador() {
 }
 
 
-// ----------------------------------------
+
 //    REGISTRAR MENOR
-// ----------------------------------------
+
 async function registrarMenor() {
     const codigo = document.getElementById("m_codigo").value;
 
@@ -105,9 +105,9 @@ async function registrarMenor() {
 }
 
 
-// ----------------------------------------
+
 //    REGISTRAR PADRE
-// ----------------------------------------
+
 async function registrarPadre() {
     const codigo = document.getElementById("p_codigo").value;
 
@@ -140,9 +140,8 @@ async function registrarPadre() {
 }
 
 
-// ----------------------------------------
 // HACER FUNCIONES USABLES DESDE HTML
-// ----------------------------------------
+
 window.registrarComprador = registrarComprador;
 window.registrarMenor = registrarMenor;
 window.registrarPadre = registrarPadre;
