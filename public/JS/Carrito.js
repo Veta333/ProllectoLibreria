@@ -1,13 +1,8 @@
-
-// Cargar carrito
-
 function cargarCarrito() {
     return JSON.parse(localStorage.getItem("carrito")) || [];
 }
 
-
 // Pintar carrito
-
 function pintarCarrito() {
     const contenedor = document.getElementById("carritoContainer");
     const totalSpan = document.getElementById("totalPrecio");
@@ -37,9 +32,7 @@ function pintarCarrito() {
     totalSpan.textContent = total.toFixed(2);
 }
 
-
 // POPUP
-
 const popup = document.getElementById("popupPago");
 const btnAbrir = document.getElementById("btnAbrirPopup");
 const btnCerrar = document.getElementById("cerrarPopup");
@@ -52,9 +45,7 @@ btnAbrir.onclick = () => {
 
 btnCerrar.onclick = () => popup.style.display = "none";
 
-
 // STRIPE
-
 document.getElementById("btnPagarStripe").addEventListener("click", async () => {
     const carrito = cargarCarrito();
 
@@ -92,7 +83,5 @@ document.getElementById("btnPagarStripe").addEventListener("click", async () => 
     }
 });
 
-
 // Inicializar
-
 pintarCarrito();
