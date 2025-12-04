@@ -7,7 +7,9 @@ import {
   updateDoc
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-/*CONFIG FIREBASE */
+/* ---------------------------
+   CONFIG FIREBASE
+   --------------------------- */
 const firebaseConfig = {
   apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
   authDomain: "prollectolibreria.firebaseapp.com",
@@ -20,7 +22,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* UTIL: localStorage */
+/* ---------------------------
+   HELPERS localStorage
+   --------------------------- */
 function cargarCarrito() {
   return JSON.parse(localStorage.getItem("carrito")) || [];
 }
@@ -28,13 +32,26 @@ function guardarCarrito(carrito) {
   localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-/*FIRESTORE: aumentar stock*/
+
+function resolveImagePath(img) {
+  if (!img) return "../IMG/default.jpg";
+  const s = String(img).trim();
+  if (s === "") return "../IMG/default.jpg";
+  if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("/")) return s;
+
+  if (s.startsWith("IMG/") || s.startsWith("../IMG/")) return s;
+
+  return "../IMG/" + s;
+}
+
+/* ---------------------------
+   Aumentar stock en Firestore
+   --------------------------- */
 async function aumentarStockFirebase(libroId) {
   if (!libroId) {
     console.warn("aumentarStockFirebase: libroId vacío");
     return;
   }
-
   try {
     const ref = doc(db, "Libros", libroId);
     const snap = await getDoc(ref);
@@ -52,7 +69,9 @@ async function aumentarStockFirebase(libroId) {
   }
 }
 
-/* PINTAR CARRITO EN LA UI */
+/* ---------------------------
+   Pintar carrito
+   --------------------------- */
 function pintarCarrito() {
   const contenedor = document.getElementById("carritoContainer");
   const totalSpan = document.getElementById("totalPrecio");
@@ -74,26 +93,24 @@ function pintarCarrito() {
   let total = 0;
 
   carrito.forEach((item, index) => {
-    total += (Number(item.precio) || 0) * (Number(item.cantidad) || 1);
+    const price = Number(item.precio) || 0;
+    const qty = Number(item.cantidad) || 1;
+    total += price * qty;
 
-
-    const imagen = item.imagenURL && item.imagenURL.trim() !== "" ? item.imagenURL : "/IMG/default.jpg";
+    const imagen = resolveImagePath(item.imagenURL);
 
     const card = document.createElement("div");
     card.className = "item-carrito";
 
-    // Estructura: imagen | info | boton eliminar
     card.innerHTML = `
       <div class="item-imagen"><img src="${imagen}" alt="${escapeHtml(item.titulo)}"></div>
-
       <div class="item-info">
         <h3>${escapeHtml(item.titulo)}</h3>
-        <p>Precio: ${Number(item.precio).toFixed(2)} €</p>
-        <p>Cantidad: ${Number(item.cantidad || 1)}</p>
+        <p>Precio: ${price.toFixed(2)} €</p>
+        <p>Cantidad: ${qty}</p>
       </div>
-
       <div class="acciones">
-        <button class="boton-eliminar" data-index="${index}" title="Eliminar">Eliminar</button>
+        <button class="boton-eliminar" data-index="${index}">Eliminar</button>
       </div>
     `;
 
@@ -101,15 +118,15 @@ function pintarCarrito() {
   });
 
   totalSpan.textContent = total.toFixed(2);
-
-  // activar listeners eliminar
   activarEliminar();
 }
 
-/*  ELIMINAR ITEM (subir stock + borrar)*/
+/* ---------------------------
+   Eliminar (sube stock + borra)
+   --------------------------- */
 function activarEliminar() {
   document.querySelectorAll(".boton-eliminar").forEach(btn => {
-    btn.removeEventListener("click", onEliminarClick); // evitar multi-attach
+    btn.removeEventListener("click", onEliminarClick);
     btn.addEventListener("click", onEliminarClick);
   });
 }
@@ -122,27 +139,28 @@ async function onEliminarClick(e) {
   const item = carrito[index];
   if (!item) return;
 
-  // Confirmación (opcional)
   const ok = confirm(`¿Eliminar "${item.titulo}" del carrito?`);
   if (!ok) return;
 
-  // intentar aumentar stock en BBDD (si tenemos libroId)
+  // 1) aumentar stock (si hay libroId)
   if (item.libroId) {
     await aumentarStockFirebase(item.libroId);
   } else {
-    console.warn("onEliminarClick: item sin libroId, no se puede actualizar stock");
+    console.warn("Elemento sin libroId: no se actualiza stock");
   }
 
-  //  quitar del carrito y guardar
+  // 2) eliminar del array y guardar
   carrito.splice(index, 1);
   guardarCarrito(carrito);
 
-  //  repintar UI
+  // 3) repintar
   pintarCarrito();
 }
 
-/* POPUP PAGO (abrir / cerrar) */
-(function setupPopup() {
+/* ---------------------------
+   Popup pago
+   --------------------------- */
+function setupPopup() {
   const popup = document.getElementById("popupPago");
   const btnAbrir = document.getElementById("btnAbrirPopup");
   const btnCerrar = document.getElementById("cerrarPopup");
@@ -155,23 +173,19 @@ async function onEliminarClick(e) {
       popup.style.display = "flex";
     });
   }
+  if (btnCerrar && popup) btnCerrar.addEventListener("click", () => (popup.style.display = "none"));
+}
 
-  if (btnCerrar && popup) {
-    btnCerrar.addEventListener("click", () => (popup.style.display = "none"));
-  }
-})();
-
-/* STRIPE: iniciar checkout */
-(function setupStripe() {
+/* ---------------------------
+   Stripe checkout
+   --------------------------- */
+function setupStripe() {
   const btnPagar = document.getElementById("btnPagarStripe");
   if (!btnPagar) return;
 
   btnPagar.addEventListener("click", async () => {
     const carrito = cargarCarrito();
-    if (carrito.length === 0) {
-      alert("Tu carrito está vacío");
-      return;
-    }
+    if (carrito.length === 0) { alert("Tu carrito está vacío"); return; }
 
     const items = carrito.map(p => ({
       name: p.titulo,
@@ -186,7 +200,7 @@ async function onEliminarClick(e) {
         body: JSON.stringify({ items })
       });
 
-      // Si la respuesta no es JSON válido -> error
+      // puede lanzar HTML si la ruta /api no existe (404 de Vercel devuelve HTML) -> .json() fallará
       const data = await res.json();
 
       if (!res.ok) {
@@ -194,22 +208,23 @@ async function onEliminarClick(e) {
         alert("Hubo un problema iniciando el pago");
         return;
       }
-
       if (!data.url) {
         console.error("Stripe: no vino URL:", data);
         alert("No se pudo iniciar el pago");
         return;
       }
 
-      // redirigir
       window.location.href = data.url;
     } catch (err) {
       console.error("Error iniciando Stripe:", err);
       alert("Hubo un error con Stripe");
     }
   });
-})();
+}
 
+/* ---------------------------
+   Aux
+   --------------------------- */
 function escapeHtml(str) {
   if (!str && str !== 0) return "";
   return String(str)
@@ -220,8 +235,11 @@ function escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
-/*INICIALIZACIÓN*/
+/* ---------------------------
+   Init
+   --------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
-
   pintarCarrito();
+  setupPopup();
+  setupStripe();
 });
