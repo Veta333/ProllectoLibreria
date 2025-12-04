@@ -18,6 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// ✅ ESTA ES LA LÍNEA ARREGLADA
 function redirigirHome() {
   window.location.href = "../Index.html";
 }
@@ -92,7 +93,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // también exponemos funciones en window por compatibilidad (por si hay onclick todavía)
+  // también exponemos funciones en window por compatibilidad
   window._debugLogin = {
     signInComprador: async () => {
       const email = document.getElementById("compradorEmail").value.trim();
@@ -101,7 +102,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // opcional: escuchar cambios de auth para debug
+  // escucha cambios de auth
   onAuthStateChanged(auth, user => {
     if (user) log("onAuthStateChanged -> usuario:", user.uid, user.email);
     else log("onAuthStateChanged -> no hay usuario");
