@@ -1,3 +1,4 @@
+// Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { 
   getFirestore, 
@@ -10,7 +11,10 @@ import {
 
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-// ✅ Config Firebase
+
+// ---------------------------------------------------------
+//  CONFIG FIREBASE
+// ---------------------------------------------------------
 const firebaseConfig = {
   apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
   authDomain: "prollectolibreria.firebaseapp.com",
@@ -24,11 +28,17 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
 
-// ✅ Obtener ID desde la URL
+
+// ---------------------------------------------------------
+//  OBTENER ID DE LIBRO DESDE LA URL
+// ---------------------------------------------------------
 const params = new URLSearchParams(window.location.search);
 const libroId = params.get("id");
 
-// ✅ Referencias al DOM
+
+// ---------------------------------------------------------
+//  REFERENCIAS AL DOM
+// ---------------------------------------------------------
 const titulo = document.getElementById("titulo");
 const autor = document.getElementById("autor");
 const descripcion = document.getElementById("genero");
@@ -36,7 +46,10 @@ const precio = document.getElementById("precio");
 const imagen = document.getElementById("imagenURL");
 const btnCarrito = document.getElementById("btnCarrito");
 
-// ✅ Cargar libro desde Firestore
+
+// ---------------------------------------------------------
+//  CARGAR LIBRO DESDE FIRESTORE
+// ---------------------------------------------------------
 async function cargarLibro() {
   if (!libroId) {
     titulo.textContent = "Libro no encontrado";
@@ -55,9 +68,12 @@ async function cargarLibro() {
       descripcion.textContent = data.genero;
       precio.textContent = data.precio + "€";
 
-      imagen.src = data.imagenURL && data.imagenURL !== "" ? data.imagenURL : "img/default.jpg";
+      // 🔥 IMAGEN CORRECTA PARA FIREBASE + VERCEL
+      imagen.src = data.imagenURL && data.imagenURL !== "" 
+        ? data.imagenURL
+        : "/IMG/default.jpg"; // <-- Ruta correcta
 
-      // Guardamos el stock actual por si queremos mostrarlo
+      // Guardar stock actual
       btnCarrito.dataset.stock = data.stock || 0;
 
     } else {
@@ -71,10 +87,14 @@ async function cargarLibro() {
 
 cargarLibro();
 
-// ✅ Añadir al carrito y bajar stock
+
+// ---------------------------------------------------------
+//  AÑADIR AL CARRITO Y BAJAR STOCK
+// ---------------------------------------------------------
 if (btnCarrito) {
   btnCarrito.addEventListener("click", async () => {
     const user = auth.currentUser;
+
     if (!user) {
       alert("Debes iniciar sesión para añadir al carrito.");
       return;
@@ -96,17 +116,21 @@ if (btnCarrito) {
         return;
       }
 
-      // 1️⃣ Añadir al carrito
+      // ---------------------------------------------------------
+      // 1️ — AÑADIR AL CARRITO DEL USUARIO EN FIRESTORE
+      // ---------------------------------------------------------
       await addDoc(collection(db, "users", user.uid, "cart"), {
         titulo: libroData.titulo,
         autor: libroData.autor,
         genero: libroData.genero,
         precio: libroData.precio,
-        imagenURL: libroData.imagenURL || "img/default.jpg",
-        libroId: libroId // Guardamos el ID original
+        imagenURL: libroData.imagenURL || "/IMG/default.jpg", 
+        libroId: libroId
       });
 
-      // 2️⃣ Bajar stock en 1
+      // ---------------------------------------------------------
+      // 2️ — BAJAR STOCK
+      // ---------------------------------------------------------
       await updateDoc(libroRef, { stock: libroData.stock - 1 });
 
       alert("Producto añadido al carrito ✅");
