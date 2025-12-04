@@ -4,7 +4,7 @@ import {
     signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-//Firebase
+// Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
     authDomain: "prollectolibreria.firebaseapp.com",
@@ -18,11 +18,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 function redirigirHome() {
-    window.location.href = "../Index.html";
+    window.location.href = "../HTML/Index.html";
 }
 
-// 📌 COMPRADOR
-document.querySelector(".card:nth-child(1) button").addEventListener("click", async () => {
+// COMPRADOR
+document.getElementById("btnLoginComprador").addEventListener("click", async () => {
     const email = document.getElementById("compradorEmail").value;
     const pass = document.getElementById("compradorPass").value;
 
@@ -35,8 +35,8 @@ document.querySelector(".card:nth-child(1) button").addEventListener("click", as
     }
 });
 
-// 📌 MENOR
-document.querySelector(".card:nth-child(2) button").addEventListener("click", async () => {
+// MENOR
+document.getElementById("btnLoginMenor").addEventListener("click", async () => {
     const email = document.getElementById("menorEmail").value;
     const pass = document.getElementById("menorPass").value;
 
@@ -49,8 +49,8 @@ document.querySelector(".card:nth-child(2) button").addEventListener("click", as
     }
 });
 
-// 📌 PADRE
-document.querySelector(".card:nth-child(3) button").addEventListener("click", async () => {
+// PADRE
+document.getElementById("btnLoginPadre").addEventListener("click", async () => {
     const email = document.getElementById("padreEmail").value;
     const pass = document.getElementById("padrePass").value;
 
