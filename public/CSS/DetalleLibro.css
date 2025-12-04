@@ -1,26 +1,42 @@
-/* CONTENEDOR PRINCIPAL */
-.detalle-libro {
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
+html, body {
     margin: 0;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0;
+    height: 100%;
+    width: 100%;
     box-sizing: border-box;
 }
 
-/* CONTENEDOR DEL LIBRO OCUPA TODO */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, footer {
+    width: 100%;
+}
+
+/* Ocupa la pantalla entera menos header+footer */
+.detalle-libro {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background-color: #fff;
+}
+
+/* Contenedor centrado, a pantalla completa */
 .libro-contenedor {
     width: 100%;
     height: 100%;
-    padding: 60px 8%;
-    box-sizing: border-box;
+    max-width: 1400px;
+    padding: 60px 6%;
     display: flex;
-    gap: 80px;
     align-items: center;
     justify-content: space-between;
+    gap: 80px;
+    box-sizing: border-box;
 }
 
 /* IMAGEN */
@@ -32,9 +48,10 @@
 
 .libro-imagen img {
     width: 320px;
-    height: auto;
+    max-width: 90%;
     object-fit: cover;
     border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 /* INFO */
@@ -58,12 +75,12 @@
 
 .libro-info p {
     font-size: 18px;
-    line-height: 1.8;
+    line-height: 1.7;
     margin-bottom: 40px;
-    max-width: 900px;
+    max-width: 700px;
 }
 
-/* ZONA DE COMPRA */
+/* COMPRA */
 .libro-compra {
     display: flex;
     align-items: center;
@@ -81,6 +98,7 @@
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 6px;
 }
 
 #btnCarrito:hover {
@@ -88,51 +106,54 @@
 }
 
 /* RESPONSIVE */
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
     .libro-contenedor {
         flex-direction: column;
-        gap: 40px;
+        text-align: center;
+        height: auto;
         padding: 40px 5%;
+        gap: 40px;
     }
 
     .libro-info p {
         max-width: none;
     }
+
+    .libro-compra {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 }
 
+@media (max-width: 480px) {
+    .libro-imagen img {
+        width: 240px;
+    }
 
+    .libro-info h1 {
+        font-size: 26px;
+    }
 
-html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100%;
+    .libro-info p {
+        font-size: 16px;
+    }
+
+    .precio {
+        font-size: 22px;
+    }
+
+    #btnCarrito {
+        padding: 12px 22px;
+        font-size: 15px;
+    }
 }
-
-
-header, footer {
-    width: 100vw !important;
-    margin: 0 !important;
-    padding: 0;
-    left: 0;
-    box-sizing: border-box;
-}
-
-
-.detalle-libro {
-    width: 100vw;
-    min-height: calc(100vh - (var(--header-h, 0px) + var(--footer-h, 0px)));
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex;
-}
-
 
 /* POPUP */
 .mensaje-carrito {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: #28a745; /* verde */
+    background: #28a745;
     color: white;
     padding: 14px 20px;
     border-radius: 8px;
