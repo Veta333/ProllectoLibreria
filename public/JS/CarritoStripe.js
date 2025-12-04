@@ -29,7 +29,7 @@ async function iniciarPago() {
         return;
     }
 
-    // Transformar formato para Stripe
+    // Transformar formato para Stripe Checkout
     const items = carrito.map(p => ({
         name: p.titulo,
         price: p.precio,
@@ -37,7 +37,7 @@ async function iniciarPago() {
     }));
 
     try {
-        // ⚠ IMPORTANTE: cambia esta URL por la de tu proyecto Vercel
+        // 🔥 Backend funcionando en Vercel
         const response = await fetch(
             "https://prollectolibreria.vercel.app/api/create-checkout-session",
             {
@@ -51,12 +51,15 @@ async function iniciarPago() {
 
         if (!data.url) {
             alert("Error iniciando el pago.");
+            console.error("Respuesta Stripe:", data);
             return;
         }
 
+        // Redirigir a Stripe Checkout
         window.location.href = data.url;
+
     } catch (err) {
-        console.error("Error:", err);
+        console.error("Error iniciando pago:", err);
         alert("Hubo un error al procesar el pago.");
     }
 }
