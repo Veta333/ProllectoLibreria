@@ -1,9 +1,9 @@
-// login.js (reparado)
+// Login.js COMPLETO
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -18,60 +18,54 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+
+// Redirigir al home
 function redirigirHome() {
   window.location.href = "/index.html";
 }
 
-function log(...args) {
-  console.log("[login.js]", ...args);
+// -------------------------------
+// FUNCIÓN GENERAL PARA LOGIN
+// -------------------------------
+async function login(emailId, passId, tipoTexto) {
+  const email = document.getElementById(emailId).value.trim();
+  const pass = document.getElementById(passId).value;
+
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, pass);
+
+    // ❌ BLOQUEAR SI NO ESTÁ VERIFICADO
+    if (!cred.user.emailVerified) {
+      alert(
+        "❌ Tu correo aún no está verificado.\nRevisa tu bandeja de entrada antes de iniciar sesión."
+      );
+      return;
+    }
+
+    alert("✔ Sesión iniciada como " + tipoTexto);
+    redirigirHome();
+
+  } catch (err) {
+    alert("❌ " + err.message);
+  }
 }
 
+
+// -------------------------------
+// LISTENERS LOGIN
+// -------------------------------
 window.addEventListener("DOMContentLoaded", () => {
-  log("DOM cargado — inicializando listeners de login");
 
-  const btnComprador = document.getElementById("btnLoginComprador");
-  const btnMenor = document.getElementById("btnLoginMenor");
-  const btnPadre = document.getElementById("btnLoginPadre");
+  document.getElementById("btnLoginComprador").addEventListener("click", () =>
+    login("compradorEmail", "compradorPass", "comprador")
+  );
 
-  // comprador
-  btnComprador.addEventListener("click", async (e) => {
-    e.preventDefault();
-    try {
-      const email = document.getElementById("compradorEmail").value.trim();
-      const pass = document.getElementById("compradorPass").value;
-      await signInWithEmailAndPassword(auth, email, pass);
-      alert("✔ Sesión iniciada como comprador");
-      redirigirHome();
-    } catch (err) {
-      alert("❌ " + err.message);
-    }
-  });
+  document.getElementById("btnLoginMenor").addEventListener("click", () =>
+    login("menorEmail", "menorPass", "menor afiliado")
+  );
 
-  // menor
-  btnMenor.addEventListener("click", async (e) => {
-    e.preventDefault();
-    try {
-      const email = document.getElementById("menorEmail").value.trim();
-      const pass = document.getElementById("menorPass").value;
-      await signInWithEmailAndPassword(auth, email, pass);
-      alert("✔ Sesión iniciada como menor afiliado");
-      redirigirHome();
-    } catch (err) {
-      alert("❌ " + err.message);
-    }
-  });
+  document.getElementById("btnLoginPadre").addEventListener("click", () =>
+    login("padreEmail", "padrePass", "padre afiliado")
+  );
 
-  // padre
-  btnPadre.addEventListener("click", async (e) => {
-    e.preventDefault();
-    try {
-      const email = document.getElementById("padreEmail").value.trim();
-      const pass = document.getElementById("padrePass").value;
-      await signInWithEmailAndPassword(auth, email, pass);
-      alert("✔ Sesión iniciada como padre afiliado");
-      redirigirHome();
-    } catch (err) {
-      alert("❌ " + err.message);
-    }
-  });
 });

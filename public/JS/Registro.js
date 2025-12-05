@@ -1,10 +1,11 @@
+// Registro.js COMPLETO
 
 // Imports Firebase
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { 
     getAuth, 
-    createUserWithEmailAndPassword 
+    createUserWithEmailAndPassword,
+    sendEmailVerification
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 import { 
@@ -14,9 +15,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 
-
-//FIREBASE
-
+// CONFIG FIREBASE
 const firebaseConfig = {
     apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
     authDomain: "prollectolibreria.firebaseapp.com",
@@ -30,20 +29,18 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Código secreto para afiliados
+// Código oculto
 const CODIGO_OCULTO = "PRUEBA";
 
 
-
-// REDIRIGIR A HOME 
-
-function redirigirHome() {
-    window.location.href = "../Index.html";
+//  REDIRIGIR A LOGIN DESPUÉS DEL REGISTRO
+function redirigirLogin() {
+    window.location.href = "Login.html";
 }
 
 
 
-//    REGISTRAR COMPRADOR
+//  REGISTRAR COMPRADOR (con verificación email)
 
 async function registrarComprador() {
     const nombre = document.getElementById("c_nombre").value;
@@ -54,6 +51,7 @@ async function registrarComprador() {
     try {
         const cred = await createUserWithEmailAndPassword(auth, email, pass);
 
+        // Guardar en Firestore
         await setDoc(doc(db, "usuarios", cred.user.uid), {
             tipo: "comprador",
             nombre,
@@ -61,8 +59,14 @@ async function registrarComprador() {
             postal
         });
 
-        alert("✔ Registrado correctamente");
-        redirigirHome();
+        // Enviar correo de verificación
+        await sendEmailVerification(cred.user);
+
+        alert(
+            "✔ Registro exitoso.\n\n📩 Te enviamos un correo de verificación.\nDebes confirmarlo antes de poder iniciar sesión."
+        );
+
+        redirigirLogin();
 
     } catch (e) {
         alert("❌ Error: " + e.message);
@@ -70,8 +74,7 @@ async function registrarComprador() {
 }
 
 
-
-//    REGISTRAR MENOR
+// REGISTRAR MENOR (con verificación )
 
 async function registrarMenor() {
     const codigo = document.getElementById("m_codigo").value;
@@ -96,8 +99,11 @@ async function registrarMenor() {
             edad
         });
 
-        alert("✔ Registrado correctamente");
-        redirigirHome();
+        await sendEmailVerification(cred.user);
+
+        alert("✔ Registrado correctamente.\n📩 Verifica tu correo antes de iniciar sesión.");
+
+        redirigirLogin();
 
     } catch (e) {
         alert("❌ Error: " + e.message);
@@ -105,8 +111,7 @@ async function registrarMenor() {
 }
 
 
-
-//    REGISTRAR PADRE
+// REGISTRAR PADRE (con verificación )
 
 async function registrarPadre() {
     const codigo = document.getElementById("p_codigo").value;
@@ -131,8 +136,11 @@ async function registrarPadre() {
             direccion
         });
 
-        alert("✔ Registrado correctamente");
-        redirigirHome();
+        await sendEmailVerification(cred.user);
+
+        alert("✔ Registrado correctamente.\n📩 Verifica tu correo antes de iniciar sesión.");
+
+        redirigirLogin();
 
     } catch (e) {
         alert("❌ Error: " + e.message);
@@ -140,7 +148,8 @@ async function registrarPadre() {
 }
 
 
-// HACER FUNCIONES USABLES DESDE HTML
+
+// Hacer funciones accesibles desde HTML
 
 window.registrarComprador = registrarComprador;
 window.registrarMenor = registrarMenor;
