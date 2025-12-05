@@ -72,7 +72,7 @@ function pintarLibros(lista) {
     lista.forEach(libro => {
         const tarjeta = document.createElement("a");
         tarjeta.classList.add("tarjeta");
-        tarjeta.href = `/HTML/DetalleLibro.html?id=${libro.id}`;
+        tarjeta.href = "../HTML/DetalleLibro.html?id=${libro.id}";
 
         const imagen = libro.imagenURL?.trim()
             ? libro.imagenURL
