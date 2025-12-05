@@ -1,10 +1,5 @@
-// public/JS/Libros_Futuros.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import {
-    getFirestore,
-    collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
@@ -15,14 +10,12 @@ const firebaseConfig = {
     appId: "1:329126591666:web:c48091699a028cacfcddab"
 };
 
-// Inicializar Firebase correctamente
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Cache interna
 let librosCache = [];
 
-/* CARGAR LIBROS FUTUROS*/
+
 async function cargarLibros() {
     try {
         const snap = await getDocs(collection(db, "Libros_Futuros"));
@@ -30,20 +23,41 @@ async function cargarLibros() {
             id: doc.id,
             ...doc.data()
         }));
-        pintarLibros(librosCache);
-
+        aplicarFiltros();
     } catch (error) {
         console.error("Error cargando Libros_Futuros:", error);
     }
 }
 
-/*PINTAR TARJETAS*/
+
+function aplicarFiltros() {
+    const texto = document.getElementById("buscadorInput").value.toLowerCase();
+    const generoSeleccionado = document.getElementById("selectGenero").value;
+
+    let lista = librosCache;
+
+    if (texto.trim() !== "") {
+        lista = lista.filter(libro =>
+            libro.titulo?.toLowerCase().includes(texto)
+        );
+    }
+
+    if (generoSeleccionado !== "Todos") {
+        lista = lista.filter(libro =>
+            libro.genero?.toLowerCase() === generoSeleccionado.toLowerCase()
+        );
+    }
+
+    pintarLibros(lista);
+}
+
+
 function pintarLibros(lista) {
     const grid = document.getElementById("gridLibros");
     grid.innerHTML = "";
 
     if (lista.length === 0) {
-        grid.innerHTML = "<p>No hay libros disponibles.</p>";
+        grid.innerHTML = "<p>No hay libros que coincidan con el filtro.</p>";
         return;
     }
 
@@ -67,14 +81,8 @@ function pintarLibros(lista) {
     });
 }
 
-/* BUSCADOR*/
-document.getElementById("buscadorInput").addEventListener("input", () => {
-    const texto = document.getElementById("buscadorInput").value.toLowerCase();
-    const filtrados = librosCache.filter(libro =>
-        libro.titulo?.toLowerCase().includes(texto)
-    );
-    pintarLibros(filtrados);
-});
+// EVENTOS
+document.getElementById("buscadorInput").addEventListener("input", aplicarFiltros);
+document.getElementById("selectGenero").addEventListener("change", aplicarFiltros);
 
-/*  EJECUCIÓN*/
 cargarLibros();

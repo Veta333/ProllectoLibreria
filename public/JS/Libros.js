@@ -16,52 +16,65 @@ const db = getFirestore(app);
 let librosCache = [];
 
 
-
-//Cargar TODOS los libros
+// CARGAR LIBROS
 
 async function cargarLibros() {
     try {
-        console.log("Cargando colección 'Libros'...");
-
         const snap = await getDocs(collection(db, "Libros"));
-        console.log("Documentos encontrados:", snap.size);
-
         librosCache = snap.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
         }));
-
-        console.log("Datos:", librosCache);
-
-        pintarLibros(librosCache);
-
+        aplicarFiltros();
     } catch (error) {
         console.error("ERROR Firestore:", error);
     }
 }
 
 
+// FILTRADO GENERAL
 
-//  Pintar tarjetas de libros
+function aplicarFiltros() {
+    const texto = document.getElementById("buscadorInput").value.toLowerCase();
+    const generoSeleccionado = document.getElementById("selectGenero").value;
+
+    let lista = librosCache;
+
+    // Filtro por texto
+    if (texto.trim() !== "") {
+        lista = lista.filter(libro =>
+            libro.titulo?.toLowerCase().includes(texto)
+        );
+    }
+
+    // Filtro por género
+    if (generoSeleccionado !== "Todos") {
+        lista = lista.filter(libro =>
+            libro.genero?.toLowerCase() === generoSeleccionado.toLowerCase()
+        );
+    }
+
+    pintarLibros(lista);
+}
+
+
+// PINTAR TARJETAS
 
 function pintarLibros(lista) {
     const grid = document.getElementById("gridLibros");
     grid.innerHTML = "";
 
     if (lista.length === 0) {
-        grid.innerHTML = "<p>No hay libros disponibles.</p>";
+        grid.innerHTML = "<p>No hay libros que coincidan con el filtro.</p>";
         return;
     }
 
     lista.forEach(libro => {
         const tarjeta = document.createElement("a");
         tarjeta.classList.add("tarjeta");
-
-
         tarjeta.href = `/HTML/DetalleLibro.html?id=${libro.id}`;
 
- 
-        const imagen = (libro.imagenURL && libro.imagenURL.trim() !== "")
+        const imagen = libro.imagenURL?.trim()
             ? libro.imagenURL
             : "../IMG/default.jpg";
 
@@ -76,20 +89,10 @@ function pintarLibros(lista) {
 }
 
 
-//Buscador dinámico
+// EVENTOS
 
-document.getElementById("buscadorInput").addEventListener("input", () => {
-    const texto = document.getElementById("buscadorInput").value.toLowerCase();
+document.getElementById("buscadorInput").addEventListener("input", aplicarFiltros);
+document.getElementById("selectGenero").addEventListener("change", aplicarFiltros);
 
-    const filtrados = librosCache.filter(libro =>
-        libro.titulo?.toLowerCase().includes(texto)
-    );
-
-    pintarLibros(filtrados);
-});
-
-
-
-// Iniciar carga al arrancar
 
 cargarLibros();

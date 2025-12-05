@@ -99,3 +99,20 @@ body {
     font-size: 17px;
     color: #222;
 }
+
+
+/* Filtro por género */
+.filtro-genero {
+    width: 60%;
+    margin: 0 auto 30px auto;
+    text-align: center;
+}
+
+.filtro-genero select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bfbfbf;
+    border-radius: 6px;
+    font-size: 16px;
+    background: white;
+}
