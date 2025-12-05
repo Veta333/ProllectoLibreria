@@ -83,7 +83,28 @@
             Aquí no solo vendemos, sino que también realizamos talleres infantiles 
             organizados por los padres de la zona.
         </p>
+
+
+        <!-- BOTÓN SOLO PARA ADMIN -->
+<div id="adminToolsContainer" style="display:none; text-align:center; margin: 40px 0;">
+    <a href="HTML/Admin.html" 
+       id="adminToolsBtn"
+       style="
+            background:#1f60d0;
+            color:white;
+            padding:14px 22px;
+            border-radius:10px;
+            text-decoration:none;
+            font-size:18px;
+            font-weight:bold;
+            box-shadow:0 4px 12px rgba(0,0,0,0.25);
+            display:inline-block;
+       ">
+       Herramientas de desarrollador
+    </a>
+</div>
     </section>
+
 
 </main>
 
@@ -117,6 +138,54 @@
         }
     });
 </script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import {
+        getFirestore,
+        doc,
+        getDoc
+    } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    import {
+        getAuth,
+        onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    /* FIREBASE CONFIG  */
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDZbfcKkvUstrB_b87ujOWKNY_SJ2YoSk",
+        authDomain: "prollectolibreria.firebaseapp.com",
+        projectId: "prollectolibreria",
+        storageBucket: "prollectolibreria.firebasestorage.app",
+        messagingSenderId: "329126591666",
+        appId: "1:329126591666:web:c48091699a028cacfcddab"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const adminBox = document.getElementById("adminToolsContainer");
+
+    // Solo mostrar el botón si el usuario es admin
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) return;
+
+        const ref = doc(db, "usuarios", user.uid);
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+            const data = snap.data();
+
+            // comprobación exacta del rol
+            if (String(data.rol).trim().toLowerCase() === "admin") {
+                adminBox.style.display = "block";
+            }
+        }
+    });
+</script>
+
 
 </body>
 </html>
