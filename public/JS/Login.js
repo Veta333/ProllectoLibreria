@@ -21,12 +21,12 @@ const auth = getAuth(app);
 
 // Redirigir al home
 function redirigirHome() {
-  window.location.href = "/index.html";
+  window.location.href = "../Index.html";
 }
 
-// -------------------------------
+
 // FUNCIÓN GENERAL PARA LOGIN
-// -------------------------------
+
 async function login(emailId, passId, tipoTexto) {
   const email = document.getElementById(emailId).value.trim();
   const pass = document.getElementById(passId).value;
@@ -34,7 +34,6 @@ async function login(emailId, passId, tipoTexto) {
   try {
     const cred = await signInWithEmailAndPassword(auth, email, pass);
 
-    // ❌ BLOQUEAR SI NO ESTÁ VERIFICADO
     if (!cred.user.emailVerified) {
       alert(
         "❌ Tu correo aún no está verificado.\nRevisa tu bandeja de entrada antes de iniciar sesión."
@@ -51,9 +50,9 @@ async function login(emailId, passId, tipoTexto) {
 }
 
 
-// -------------------------------
+
 // LISTENERS LOGIN
-// -------------------------------
+
 window.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("btnLoginComprador").addEventListener("click", () =>
