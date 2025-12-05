@@ -1,0 +1,124 @@
+/* ------------------- RESET ------------------- */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    background: #f3f4f7;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header y footer pegados arriba y abajo */
+header, footer {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* ------------------- CONTENEDOR PRINCIPAL ------------------- */
+.wishlist-page {
+    flex: 1;
+    width: 100%;
+    padding: 40px 0;
+    box-sizing: border-box;
+    background: #f5f6f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título */
+.wishlist-page h1 {
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+/* ------------------- GRID ------------------- */
+.wishlist-grid {
+    display: grid;
+    width: 90%;
+    max-width: 1400px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+}
+
+/* ------------------- TARJETA ------------------- */
+.wish-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wish-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.wish-card h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.wish-card p {
+    margin: 0;
+    color: #444;
+}
+
+/* ------------------- BOTONES ------------------- */
+.wish-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-outline {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid #007bff;
+    background: transparent;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.btn-outline:hover {
+    background: #007bff;
+    color: white;
+}
+
+.btn-danger {
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: #e03e2d;
+    border: 1px solid #e03e2d;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background: #b53022;
+}
+
+/* ------------------- VACÍO ------------------- */
+.empty {
+    text-align: center;
+    font-size: 18px;
+    padding: 80px 0;
+    color: #777;
+}
+
+/* ------------------- RESPONSIVE  */
+@media (max-width: 480px) {
+    .wish-card img { height: 170px; }
+    .wishlist-page h1 { font-size: 26px; }
+}
