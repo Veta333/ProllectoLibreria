@@ -21,7 +21,7 @@ const auth = getAuth(app);
 
 // Redirigir al home
 function redirigirHome() {
-  window.location.href = "../Index.html";
+  window.location.href = "../index.html";
 }
 
 
