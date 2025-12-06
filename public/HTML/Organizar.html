@@ -7,7 +7,6 @@
 
     <link rel="icon" type="image/png" href="../IMG/favicon.png" sizes="32x32">
 
-
     <!-- CSS específicos -->
     <link rel="stylesheet" href="../CSS/header.css">
     <link rel="stylesheet" href="../CSS/organizar.css">
@@ -19,24 +18,18 @@
     <header class="header">
         <div class="logo">
            <a href="../index.html">Centro de ocio Local & Librería Carral.</a>
-
         </div>
 
         <nav class="nav-icons">
-
-            <!-- CARRITO ) -->
             <a href="Carrito.html" class="icon-btn">
-<img src="../IMG/carrito.png" alt="Carrito" class="icon-size">
+                <img src="../IMG/carrito.png" alt="Carrito" class="icon-size">
             </a>
 
             <a href="Wishlist.html" class="icon-btn" id="wishlistBtn" title="Lista de deseos">
-  <img src="../IMG/estrella.png" alt="Wishlist" class="icon-size">
-  <span id="wishlistCount" class="header-badge">0</span>
-</a>
+                <img src="../IMG/estrella.png" alt="Wishlist" class="icon-size">
+                <span id="wishlistCount" class="header-badge">0</span>
+            </a>
 
-
-
-            <!-- HAMBURGUESA -->
             <div class="hamburger-container">
                 <button class="hamburger-btn" id="menuButton">
                     <span></span>
@@ -52,80 +45,69 @@
                 </nav>
             </div>
 
-            <!-- USUARIO -->
             <div style="position: relative;">
                 <button id="userBtn">
                     <img id="userIcon" src="../IMG/Perfil.png" alt="Usuario">
                 </button>
 
-                <!-- MENÚ DESPLEGABLE DEL USUARIO -->
                 <div id="userMenu" class="user-menu">
                     <button id="logoutBtn">Cerrar sesión</button>
                 </div>
             </div>
-
         </nav>
     </header>
 
-    <!-- JS DEL HEADER -->
     <script type="module" src="../JS/Header.js"></script>
 
+    <!-- FORMULARIO PARA CREAR EVENTOS -->
+    <div class="event-wrapper">
+        <div class="event-card">
+            <h2>Organizar Evento</h2>
 
+            <form id="eventForm">
 
+                <div class="input-group">
+                    <label for="titulo">Título del Evento</label>
+                    <input type="text" id="titulo" required>
+                </div>
 
- <!-- FORMULARIO PARA CREAR EVENTOS -->
-<div class="event-wrapper">
+                <div class="input-group">
+                    <label for="ubicacion">Ubicación</label>
+                    <input type="text" id="ubicacion" required>
+                </div>
 
-    <div class="event-card">
-        <h2>Organizar Evento</h2>
+                <div class="input-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" id="fecha" required>
+                </div>
 
-        <form id="eventForm">
+                <div class="input-group">
+                    <label for="edades">Edades</label>
+                    <input type="text" id="edades" placeholder="Ej: 10-16" required>
+                </div>
 
-            <div class="input-group">
-                <label>Título del Evento</label>
-                <input type="text" id="titulo" required>
-            </div>
+                <div class="input-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" required></textarea>
+                </div>
 
-            <div class="input-group">
-                <label>Ubicación</label>
-                <input type="text" id="ubicacion" required>
-            </div>
+                <div class="input-group">
+                    <label for="imagenURL">Imagen (URL)</label>
+                    <input type="text" id="imagenURL" placeholder="https://...">
+                </div>
 
-            <div class="input-group">
-                <label>Fecha</label>
-                <input type="date" id="fecha" required>
-            </div>
+                <button type="submit" class="btn-confirmar">Confirmar</button>
+            </form>
 
-            <div class="input-group">
-                <label>Edades</label>
-                <input type="text" id="edades" placeholder="Ej: 10-16" required>
-            </div>
-
-            <div class="input-group">
-                <label>Descripción</label>
-                <textarea id="descripcion" required></textarea>
-            </div>
-
-            <div class="input-group">
-                <label>Imagen (URL)</label>
-                <input type="text" id="imagenURL" placeholder="https://...">
-            </div>
-
-            <button type="submit" class="btn-confirmar">Confirmar</button>
-        </form>
-
-        <p id="msg"></p>
+            <p id="msg"></p>
+        </div>
     </div>
 
-</div>
+    <script type="module" src="../JS/Organizar.js"></script>
 
-<script type="module" src="../JS/Organizar.js"></script>
-
-<script>
-console.log("HTML cargado correctamente");
-</script>
-
-
+    <script>
+    console.log("HTML cargado correctamente");
+    </script>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -150,24 +132,22 @@ console.log("HTML cargado correctamente");
         </div>
     </footer>
 
+    <script>
+        const btn = document.getElementById("menuButton");
+        const menu = document.getElementById("menuDropdown");
 
+        btn.addEventListener("click", () => {
+            menu.classList.toggle("show");
+            btn.classList.toggle("active");
+        });
 
-<script>
-    const btn = document.getElementById("menuButton");
-    const menu = document.getElementById("menuDropdown");
-
-    btn.addEventListener("click", () => {
-        menu.classList.toggle("show");
-        btn.classList.toggle("active");
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!btn.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.remove("show");
-            btn.classList.remove("active");
-        }
-    });
-</script>
+        document.addEventListener("click", (e) => {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.remove("show");
+                btn.classList.remove("active");
+            }
+        });
+    </script>
 
 </body>
 </html>
