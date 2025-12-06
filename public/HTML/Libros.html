@@ -78,9 +78,11 @@
             <button disabled>🔍</button>
         </div>
 
-        <!-- Filtro por género -->
+       
+<!-- Filtro por género -->
 <div class="filtro-genero">
-    <select id="selectGenero">
+    <label for="selectGenero" class="sr-only">Filtrar por género</label>
+    <select id="selectGenero" aria-label="Filtrar libros por género">
         <option value="Todos">Todos los géneros</option>
         <option value="Satira">Sátira</option>
         <option value="Ficción Criminal">Ficción Criminal</option>
@@ -94,6 +96,7 @@
         <option value="Ciencia ficcion">Ciencia ficción</option>
     </select>
 </div>
+
 
 
         <!-- Contenedor de tarjetas -->
