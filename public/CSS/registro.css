@@ -82,3 +82,41 @@ button:hover {
         width: 90%;
     }
 }
+
+
+
+html, body {
+    height: 100%;
+}
+
+/* Hacer que el contenido principal ocupe el espacio entre header y footer */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.container {
+    flex: 1;                
+    display: flex;
+    justify-content: center;
+    align-items: center;     
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 40px 20px;
+}
+
+/* Ajustar el bloque de título + subtítulo */
+h2 {
+    margin-top: 40px;
+}
+
+p {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+/* Evitar que el footer suba si hay poco contenido */
+footer {
+    margin-top: auto;
+}
