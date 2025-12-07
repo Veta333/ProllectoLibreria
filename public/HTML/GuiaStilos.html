@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estilos – Centro de ocio Local & Librería Carral</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f4f4;
+            color: #222;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: #303030;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .section {
+            width: 85%;
+            max-width: 1100px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            border-left: 6px solid #303030;
+            padding-left: 12px;
+            margin-bottom: 20px;
+        }
+
+        .palette {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .color-box {
+            width: 120px;
+            height: 80px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .typography-sample p {
+            margin: 8px 0;
+        }
+
+        .btn-sample {
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 15px;
+            margin: 6px;
+        }
+
+        .input-sample input {
+            display: block;
+            margin-bottom: 14px;
+            width: 260px;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #bbb;
+            background: #f8f8f8;
+            font-size: 15px;
+            transition: 0.25s;
+        }
+
+        .input-sample input:focus {
+            border-color: #444;
+            background: white;
+        }
+
+        .input-error {
+            border-color: #cc3333 !important;
+            background: #ffe6e6 !important;
+        }
+
+        .card {
+            width: 250px;
+            padding: 16px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin: 10px;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>Guía de Estilos — Librería Carral</header>
+
+
+<section class="section">
+    <h2>01 — Paleta de colores</h2>
+
+    <div class="palette">
+
+        <div class="color-box" style="background:#303030;">#303030</div>
+        <div class="color-box" style="background:#e6e6e6; color:#222;">#e6e6e6</div>
+        <div class="color-box" style="background:#ffffff; color:#222; border:1px solid #ccc;">#ffffff</div>
+        <div class="color-box" style="background:#0077cc;">#0077cc</div>
+        <div class="color-box" style="background:#2ecc71;">#2ecc71</div>
+        <div class="color-box" style="background:#cc3333;">#cc3333</div>
+
+    </div>
+</section>
+
+
+<section class="section">
+    <h2>02 — Tipografía</h2>
+
+    <div class="typography-sample">
+        <p style="font-size:32px; font-weight:bold;">H1 – Título Principal</p>
+        <p style="font-size:26px; font-weight:bold;">H2 – Subtítulo / Sección</p>
+        <p style="font-size:20px; font-weight:bold;">H3 – Encabezado de Tarjeta</p>
+        <p style="font-size:16px;">Párrafo o cuerpo del texto (16px)</p>
+        <p style="font-size:14px; color:#555;">Texto secundario o pequeño (14px)</p>
+    </div>
+</section>
+
+
+<section class="section">
+    <h2>03 — Botones</h2>
+
+    <button class="btn-sample" style="background:#303030;">Default</button>
+    <button class="btn-sample" style="background:#000;">Hover</button>
+    <button class="btn-sample" style="background:#0077cc;">Acción</button>
+    <button class="btn-sample" style="background:#2ecc71;">Éxito</button>
+    <button class="btn-sample" style="background:#cc3333;">Error</button>
+
+</section>
+
+<section class="section">
+    <h2>04 — Inputs</h2>
+
+    <div class="input-sample">
+
+        <label>Input por defecto</label>
+        <input type="text" placeholder="Escribe aquí...">
+
+        <label>Input en foco</label>
+        <input type="text" placeholder="Click aquí..." style="border-color:#444; background:white;">
+
+        <label>Error</label>
+        <input type="text" class="input-error" placeholder="Error">
+
+        <label>Deshabilitado</label>
+        <input type="text" placeholder="Deshabilitado" disabled style="background:#ddd;">
+    </div>
+</section>
+
+
+<section class="section">
+    <h2>05 — Tarjetas / UI Cards</h2>
+
+    <div class="flex">
+        <div class="card">
+            <img src="../IMG/placeholder.jpg" alt="Imagen ejemplo">
+            <h3>Libro</h3>
+            <p>Ejemplo de tarjeta de libro.</p>
+        </div>
+
+        <div class="card">
+            <h3>Formulario</h3>
+            <p>Tarjeta para formularios como Organizar Evento.</p>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <h2>06 — Accesibilidad</h2>
+
+    <ul>
+        <li>Todos los inputs deben tener <strong>&lt;label&gt;</strong> asociado.</li>
+        <li>Los iconos incluyen texto alternativo (<strong>alt</strong>).</li>
+        <li>Los botones sin texto usan <strong>aria-label</strong>.</li>
+        <li>Contraste mínimo AA: texto oscuro sobre fondo claro.</li>
+        <li>Navegable con teclado.</li>
+    </ul>
+</section>
+
+</body>
+</html>
