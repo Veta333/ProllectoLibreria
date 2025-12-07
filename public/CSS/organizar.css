@@ -1,21 +1,33 @@
 /* RESET BÁSICO */
-body {
-    margin: 0;      
+html, body {
+    margin: 0;
     padding: 0;
+    height: 100%;
+}
+
+body {
     background: #e6e6e6;
     font-family: Arial, sans-serif;
+
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* ZONA CENTRAL (entre header y footer)*/
+
 .event-wrapper {
+    flex: 1; 
     display: flex;
     justify-content: center;
-    align-items: center;   
-    min-height: calc(100vh - 160px);
+    align-items: center;
     padding: 20px;
+
+    
+    box-sizing: border-box;
 }
 
-/*TARJETA DEL FORMULARIO*/
+/* TARJETA DEL FORMULARIO */
 .event-card {
     background: #fff;
     width: 420px;
@@ -65,7 +77,7 @@ textarea {
     height: 90px;
 }
 
-
+/* BOTÓN */
 .btn-confirmar {
     width: 100%;
     padding: 14px;
@@ -83,31 +95,32 @@ textarea {
     background: black;
 }
 
-
 #msg {
     margin-top: 18px;
     text-align: center;
     font-weight: bold;
 }
 
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-.event-wrapper {
-    flex: 1;
-}
-
-/* Footer siempre pegado al final */
+/* FOOTER SIEMPRE AL FINAL */
 footer {
     margin-top: auto;
+}
+
+/*  RESPONSIVE PANTALLAS BAJAS */
+@media (max-height: 800px) {
+
+    /* La tarjeta no se corta por arriba */
+    .event-wrapper {
+        align-items: flex-start !important;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        overflow-y: auto; 
+    }
+
+    /*  scroll interno  */
+    .event-card {
+        max-height: none;
+        height: auto;
+        overflow: visible;
+    }
 }
